@@ -104,8 +104,13 @@ public final class SmelteryBurner extends SmelteryComponent implements
 
             progressItem.setItem(burningProgressItem);
 
-            if (item.getType() == Material.LAVA_BUCKET) {
-                inventory.setItem(null, i, new ItemStack(Material.BUCKET));
+            if (itemType.getCraftingRemainingItem() != null) {
+                ItemStack remainder = itemType.getCraftingRemainingItem().createItemStack();
+                if (!inventory.canHold(remainder)) {
+                    continue;
+                }
+                inventory.setItem(null, i, item.subtract());
+                inventory.addItem(null, remainder);
             } else {
                 inventory.setItem(null, i, item.subtract());
             }
