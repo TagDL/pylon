@@ -213,7 +213,7 @@ public class FluidExperienceBottler extends RebarBlock implements
             return new WailaDisplay(getNameTranslationKey());
         }
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("progressbar", PylonUtils.createProgressBar(
+                RebarArgument.of("bar", PylonUtils.createProgressBar(
                         (double) (getProcessTimeTicks() - getProcessTicksRemaining()) / getProcessTimeTicks(), 20, TextColor.color(0, 255, 0)))
         ));
     }

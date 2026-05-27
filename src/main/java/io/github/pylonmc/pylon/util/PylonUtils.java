@@ -134,27 +134,12 @@ public class PylonUtils {
         return getDisplacement(source, target).normalize();
     }
 
-    public @NotNull Component createBar(double proportion, int bars, TextColor color) {
-        int filledBars = (int) Math.round(bars * proportion);
-        return Component.text("|".repeat(filledBars)).color(color)
-                .append(Component.text("|".repeat(bars - filledBars)).color(NamedTextColor.GRAY));
-    }
-
     public @NotNull Component createProgressBar(double progress, int bars, TextColor color) {
         int filledBars = (int) Math.round(bars * progress);
         return Component.translatable("pylon.gui.progress_bar.text").arguments(
                 RebarArgument.of("filled_bars", Component.text("|".repeat(filledBars)).color(color)),
                 RebarArgument.of("empty_bars", "|".repeat(bars - filledBars)),
                 RebarArgument.of("progress", UnitFormat.PERCENT.format(progress * 100).significantFigures(2))
-        );
-    }
-
-    public @NotNull Component createDiscreteProgressBar(int stage, int maxStage, TextColor color) {
-        return Component.translatable("pylon.gui.discrete_progress_bar.text").arguments(
-                RebarArgument.of("filled_bars", Component.text("|".repeat(stage)).color(color)),
-                RebarArgument.of("empty_bars", "|".repeat(maxStage - stage)),
-                RebarArgument.of("stage", stage),
-                RebarArgument.of("max_stage", maxStage)
         );
     }
 

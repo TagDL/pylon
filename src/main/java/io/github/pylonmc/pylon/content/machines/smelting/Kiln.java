@@ -20,14 +20,13 @@ import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
-import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.ProgressBarBuilder;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -393,7 +392,7 @@ public class Kiln extends RebarBlock implements
         }
 
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("temperature-bar", new ProgressBar()
+                RebarArgument.of("temperature-bar", new ProgressBarBuilder()
                         .proportion(temperature / maxTemperature)
                         .barColor(PylonUtils.colorFromTemperature(temperature))
                         .bars(30)
@@ -403,7 +402,7 @@ public class Kiln extends RebarBlock implements
                 RebarArgument.of("progress", getRecipeProgress() == null
                         ? Component.empty()
                         : Component.translatable("pylon.waila.kiln").arguments(
-                        RebarArgument.of("progress", new ProgressBar()
+                        RebarArgument.of("progress", new ProgressBarBuilder()
                                 .proportion(1.0 - getRecipeProgress())
                                 .barColor(NamedTextColor.WHITE)
                                 .suffix(UnitFormat.PERCENT.format(100 * (1 - getRecipeProgress())).decimalPlaces(1))

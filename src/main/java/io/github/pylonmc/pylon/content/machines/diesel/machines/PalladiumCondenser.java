@@ -19,10 +19,12 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.ProgressBarBuilder;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -252,20 +254,20 @@ public class PalladiumCondenser extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        String wailaFormat = "pylon.item." + getKey().getKey() + ".waila_format";
         Integer timeLeft = getProcessTicksRemaining();
+        if (timeLeft == null) {
+            return new WailaDisplay(getNameTranslationKey());
+        }
+
+        double proportion = ((double) getProcessTimeTicks() - (double) getProcessTicksRemaining()) / (double) getProcessTimeTicks();
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("duration-if-any",
-                        timeLeft == null
-                                ? Component.empty()
-                                : Component.translatable(wailaFormat).arguments(
-                                RebarArgument.of("duration", PylonUtils.createProgressBar(
-                                        ((double) getProcessTimeTicks() - (double) getProcessTicksRemaining()) / (double) getProcessTimeTicks(),
-                                        20,
-                                        NamedTextColor.WHITE
-                                ))
-                        )
-                )
+                RebarArgument.of("bar",
+                        new ProgressBarBuilder()
+                                .proportion(proportion)
+                                .barColor(NamedTextColor.WHITE)
+                                .build()
+                ),
+                RebarArgument.of("progress", UnitFormat.PERCENT.format(proportion * 100).significantFigures(2))
         ));
     }
 }

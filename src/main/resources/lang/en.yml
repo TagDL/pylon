@@ -1212,7 +1212,7 @@ item:
       <diamond> 2x <yellow><item:pylon:copper_framed_glass></yellow>
       <diamond> 8x <yellow><item:pylon:iron_support_beam/></yellow>
       <diamond> 16x <yellow><item:pylon:bronze_grating/></yellow>
-    waila: "Burner Hydraulic Purifier | %fuel-bar%"
+    waila: "Burner Hydraulic Purifier | %fuel-bar% %time-remaining"
 
   convection_hydraulic_purifier:
     name: "Convection Hydraulic Purifier"
@@ -1235,7 +1235,7 @@ item:
       <diamond> 2x <yellow><item:pylon:bronze_foundation/></yellow>
       <diamond> 7x <yellow><item:pylon:iron_support_beam/></yellow>
       <diamond> 7x <yellow><item:pylon:bronze_grating/></yellow>
-    waila: "Convection Hydraulic Purifier | %efficiency%"
+    waila: "Convection Hydraulic Purifier | %bar% %efficiency%"
 
   liselette_hydraulic_purifier:
     name: "Liselette Hydraulic Purifier"
@@ -2318,8 +2318,7 @@ item:
       <diamond> 8x <yellow><item:pylon:collimator_pillar/></yellow>
       <diamond> 16x <yellow><item:pylon:bronze_grating/></yellow>
       <diamond> 3 or more <yellow>Fluid Tank Casing</yellow>
-    waila: "Palladium Condenser | %duration-if-any%"
-    waila_format: "| %duration%"
+    waila: "Palladium Condenser | %bar% %duration%"
 
   crude_alloy_furnace:
     name: "Crude Alloy Furnace"
