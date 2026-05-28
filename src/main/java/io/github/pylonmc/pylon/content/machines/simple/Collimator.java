@@ -5,13 +5,13 @@ import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidTank;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarProcessor;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.base.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.base.FluidTankRebarBlock;
+import io.github.pylonmc.rebar.block.base.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.base.ProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.base.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.base.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.base.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -41,13 +41,13 @@ import java.util.Map;
 
 
 public class Collimator extends RebarBlock implements
-        RebarFluidTank,
-        RebarProcessor,
-        RebarDirectionalBlock,
-        RebarInventoryBlock,
-        RebarTickingBlock,
-        RebarSimpleMultiblock,
-        RebarVirtualInventoryBlock {
+        FluidTankRebarBlock,
+        ProcessorRebarBlock,
+        DirectionalRebarBlock,
+        GuiRebarBlock,
+        TickingRebarBlock,
+        SimpleRebarMultiblock,
+        VirtualInventoryRebarBlock {
 
     public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final int obscyraPerCohesiveUnit = getSettings().getOrThrow("obscyra-per-cohesive-unit", ConfigAdapter.INTEGER);
@@ -148,8 +148,8 @@ public class Collimator extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarFluidTank.super.onBreak(drops, context);
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        FluidTankRebarBlock.super.onBlockBreak(drops, context);
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
     }
 }

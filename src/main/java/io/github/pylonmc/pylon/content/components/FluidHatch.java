@@ -1,15 +1,14 @@
 package io.github.pylonmc.pylon.content.components;
 
 import com.google.common.base.Preconditions;
-import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.content.machines.fluid.FluidTankCasing;
 import io.github.pylonmc.pylon.content.machines.fluid.multiblock.FluidTankCasingComponent;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
+import io.github.pylonmc.rebar.block.base.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.base.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.base.SimpleRebarMultiblock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -17,14 +16,11 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
-import io.github.pylonmc.rebar.item.RebarItemSchema;
-import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -35,18 +31,16 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public abstract class FluidHatch extends RebarBlock implements
-        RebarFluidBufferBlock,
-        RebarSimpleMultiblock,
-        RebarDirectionalBlock {
+        FluidBufferRebarBlock,
+        SimpleRebarMultiblock,
+        DirectionalRebarBlock {
 
     private static final NamespacedKey FLUID_KEY = pylonKey("fluid");
     public @Nullable RebarFluid fluid;
@@ -80,7 +74,7 @@ public abstract class FluidHatch extends RebarBlock implements
 
     @Override
     public boolean checkFormed() {
-        boolean formed = RebarSimpleMultiblock.super.checkFormed();
+        boolean formed = SimpleRebarMultiblock.super.checkFormed();
         if (formed) {
             FluidTankCasing casing = BlockStorage.getAs(FluidTankCasing.class, getBlock().getRelative(BlockFace.UP));
             Preconditions.checkState(casing != null);
@@ -94,7 +88,7 @@ public abstract class FluidHatch extends RebarBlock implements
 
     @Override
     public void onMultiblockUnformed(boolean partUnloaded) {
-        RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
+        SimpleRebarMultiblock.super.onMultiblockUnformed(partUnloaded);
         Waila.removeWailaOverride(getBlock().getRelative(BlockFace.UP));
         if (fluid != null) {
             setFluidCapacity(fluid, 0);
@@ -107,7 +101,7 @@ public abstract class FluidHatch extends RebarBlock implements
 
     @Override
     public boolean setFluid(@NotNull RebarFluid fluid, double amount) {
-        boolean result = RebarFluidBufferBlock.super.setFluid(fluid, amount);
+        boolean result = FluidBufferRebarBlock.super.setFluid(fluid, amount);
         float scale = (float) (0.9 * fluidAmount(fluid) / fluidCapacity(fluid));
         if (scale < RebarUtils.FLUID_EPSILON) {
             getFluidDisplay().setItemStack(null);
@@ -180,8 +174,8 @@ public abstract class FluidHatch extends RebarBlock implements
     }
 
     @Override
-    public void postBreak(@NotNull BlockBreakContext context) {
-        RebarFluidBufferBlock.super.postBreak(context);
+    public void onPostBlockBreak(@NotNull BlockBreakContext context) {
+        FluidBufferRebarBlock.super.onPostBlockBreak(context);
         Waila.removeWailaOverride(getBlock().getRelative(BlockFace.UP));
     }
 }

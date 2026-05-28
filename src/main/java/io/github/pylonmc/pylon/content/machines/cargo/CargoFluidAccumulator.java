@@ -49,11 +49,11 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class CargoFluidAccumulator extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarCargoBlock,
-        RebarFluidTank {
+        DirectionalRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        CargoRebarBlock,
+        FluidTankRebarBlock {
 
     public static final NamespacedKey ITEM_THRESHOLD_KEY = pylonKey("item_threshold");
     public static final NamespacedKey FLUID_THRESHOLD_KEY = pylonKey("fluid_threshold");
@@ -96,7 +96,7 @@ public class CargoFluidAccumulator extends RebarBlock implements
             return List.of(
                     RebarArgument.of(
                             "transfer-rate",
-                            UnitFormat.ITEMS_PER_SECOND.format(RebarCargoBlock.cargoItemsTransferredPerSecond(transferRate))
+                            UnitFormat.ITEMS_PER_SECOND.format(CargoRebarBlock.cargoItemsTransferredPerSecond(transferRate))
                     ),
                     RebarArgument.of(
                             "fluid-buffer",
@@ -179,9 +179,9 @@ public class CargoFluidAccumulator extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
-        RebarFluidTank.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        FluidTankRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override
@@ -190,25 +190,25 @@ public class CargoFluidAccumulator extends RebarBlock implements
                 0,
                 Math.min(
                         fluidThreshold - getFluidAmount(),
-                        RebarFluidTank.super.fluidAmountRequested(fluid)
+                        FluidTankRebarBlock.super.fluidAmountRequested(fluid)
                 )
         );
     }
 
     @Override
     public @NotNull List<Pair<@NotNull RebarFluid, @NotNull Double>> getSuppliedFluids() {
-        return allowFluidInputs ? List.of() : RebarFluidTank.super.getSuppliedFluids();
+        return allowFluidInputs ? List.of() : FluidTankRebarBlock.super.getSuppliedFluids();
     }
 
     @Override
     public void onFluidRemoved(@NotNull RebarFluid fluid, double amount) {
-        RebarFluidTank.super.onFluidRemoved(fluid, amount);
+        FluidTankRebarBlock.super.onFluidRemoved(fluid, amount);
         doTransfer();
     }
 
     @Override
     public void onFluidAdded(@NotNull RebarFluid fluid, double amount) {
-        RebarFluidTank.super.onFluidAdded(fluid, amount);
+        FluidTankRebarBlock.super.onFluidAdded(fluid, amount);
         doTransfer();
     }
 

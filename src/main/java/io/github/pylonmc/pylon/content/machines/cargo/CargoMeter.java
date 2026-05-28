@@ -47,11 +47,11 @@ import java.util.Map;
 
 
 public class CargoMeter extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarCargoBlock,
-        RebarTickingBlock {
+        DirectionalRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        CargoRebarBlock,
+        TickingRebarBlock {
 
     public static final NamespacedKey MEASUREMENTS_KEY = PylonUtils.pylonKey("measurements");
     public static final NamespacedKey NUMBER_OF_MEASUREMENTS_KEY = PylonUtils.pylonKey("number_of_measurements");
@@ -94,7 +94,7 @@ public class CargoMeter extends RebarBlock implements
             return List.of(
                     RebarArgument.of(
                             "transfer-rate",
-                            UnitFormat.ITEMS_PER_SECOND.format(RebarCargoBlock.cargoItemsTransferredPerSecond(transferRate))
+                            UnitFormat.ITEMS_PER_SECOND.format(CargoRebarBlock.cargoItemsTransferredPerSecond(transferRate))
                     ),
                     RebarArgument.of(
                             "min-measurement-time",

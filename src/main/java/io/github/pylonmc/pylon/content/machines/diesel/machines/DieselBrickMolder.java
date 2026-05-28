@@ -43,13 +43,13 @@ import java.util.Map;
 
 
 public class DieselBrickMolder extends RebarBlock implements
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarFluidBufferBlock,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarRecipeProcessor<MoldingRecipe> {
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        FluidBufferRebarBlock,
+        DirectionalRebarBlock,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        RecipeProcessorRebarBlock<MoldingRecipe> {
 
     public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
     public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
@@ -249,9 +249,9 @@ public class DieselBrickMolder extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
-        RebarFluidBufferBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override

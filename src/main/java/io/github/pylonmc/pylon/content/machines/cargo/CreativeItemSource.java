@@ -1,10 +1,10 @@
 package io.github.pylonmc.pylon.content.machines.cargo;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarCargoBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.base.CargoRebarBlock;
+import io.github.pylonmc.rebar.block.base.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.base.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.base.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -28,7 +28,7 @@ import java.util.Map;
 
 
 public class CreativeItemSource extends RebarBlock
-        implements RebarDirectionalBlock, RebarInventoryBlock, RebarCargoBlock, RebarVirtualInventoryBlock {
+        implements DirectionalRebarBlock, GuiRebarBlock, CargoRebarBlock, VirtualInventoryRebarBlock {
 
     private final VirtualInventory inventory = new VirtualInventory(1);
 

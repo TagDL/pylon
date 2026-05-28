@@ -48,13 +48,13 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class DieselGrindstone extends RebarBlock implements
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarFluidBufferBlock,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarRecipeProcessor<GrindstoneRecipe> {
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        FluidBufferRebarBlock,
+        DirectionalRebarBlock,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        RecipeProcessorRebarBlock<GrindstoneRecipe> {
 
     public static final NamespacedKey STONE_ROTATION_KEY = pylonKey("stone_rotation");
 
@@ -258,9 +258,9 @@ public class DieselGrindstone extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
-        RebarFluidBufferBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override

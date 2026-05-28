@@ -43,13 +43,13 @@ import java.util.Map;
 
 
 public class DieselPress extends RebarBlock implements
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarDirectionalBlock,
-        RebarFluidBufferBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarRecipeProcessor<PressRecipe> {
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        DirectionalRebarBlock,
+        FluidBufferRebarBlock,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        RecipeProcessorRebarBlock<PressRecipe> {
 
     public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
     public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
@@ -158,7 +158,7 @@ public class DieselPress extends RebarBlock implements
     @Override
     public boolean setFluid(@NotNull RebarFluid fluid, double amount) {
         double current = fluidAmount(fluid);
-        boolean output = RebarFluidBufferBlock.super.setFluid(fluid, amount);
+        boolean output = FluidBufferRebarBlock.super.setFluid(fluid, amount);
         if (amount < current) {
             tryStartRecipe();
         }
@@ -260,9 +260,9 @@ public class DieselPress extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
-        RebarFluidBufferBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override

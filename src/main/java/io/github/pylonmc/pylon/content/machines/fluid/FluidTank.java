@@ -4,8 +4,8 @@ import io.github.pylonmc.pylon.content.machines.fluid.multiblock.FluidTankCasing
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarGhostBlockHolder;
+import io.github.pylonmc.rebar.block.base.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.base.GhostBlockHolderRebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarMultiblock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Set;
 
 public class FluidTank extends RebarBlock
-        implements RebarMultiblock, FluidTankWithDisplayEntity, RebarDirectionalBlock, RebarGhostBlockHolder {
+        implements RebarMultiblock, FluidTankWithDisplayEntity, DirectionalRebarBlock, GhostBlockHolderRebarBlock {
 
     private static final Vector3i CASING_POSITION = new Vector3i(0, 1, 0);
 

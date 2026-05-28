@@ -5,6 +5,7 @@ import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.base.handler.DispenserRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -46,15 +47,15 @@ import java.util.*;
 
 
 public class DieselBreaker extends RebarBlock implements
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarFluidBufferBlock,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        FluidBufferRebarBlock,
+        DirectionalRebarBlock,
+        TickingRebarBlock,
         RebarMultiblock,
-        RebarLogisticBlock,
-        RebarProcessor,
-        RebarDispenser {
+        LogisticRebarBlock,
+        ProcessorRebarBlock,
+        DispenserRebarBlockHandler {
 
     public final double dieselPerBlock = getSettings().getOrThrow("diesel-per-block", ConfigAdapter.DOUBLE);
     public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
@@ -285,7 +286,7 @@ public class DieselBreaker extends RebarBlock implements
 
     @Override
     public void onFluidAdded(@NotNull RebarFluid fluid, double amount) {
-        RebarFluidBufferBlock.super.onFluidAdded(fluid, amount);
+        FluidBufferRebarBlock.super.onFluidAdded(fluid, amount);
         tryStartDrilling();
     }
 
@@ -295,9 +296,9 @@ public class DieselBreaker extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
-        RebarFluidBufferBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override

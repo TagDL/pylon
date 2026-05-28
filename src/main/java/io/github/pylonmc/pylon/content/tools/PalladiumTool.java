@@ -2,14 +2,14 @@ package io.github.pylonmc.pylon.content.tools;
 
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarRepairableItem;
+import io.github.pylonmc.rebar.item.base.RepairableRebarItem;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class PalladiumTool extends RebarItem implements RebarRepairableItem {
+public class PalladiumTool extends RebarItem implements RepairableRebarItem {
     public PalladiumTool(@NotNull ItemStack stack) {
         super(stack);
     }

@@ -23,11 +23,11 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 public final class SmelteryBurner extends SmelteryComponent implements
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarProcessor {
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        ProcessorRebarBlock {
 
     private final ItemStackBuilder notBurningProgressItem = ItemStackBuilder.of(Material.CHARCOAL)
             .name(Component.translatable("pylon.gui.smeltery_burner.not_burning"));

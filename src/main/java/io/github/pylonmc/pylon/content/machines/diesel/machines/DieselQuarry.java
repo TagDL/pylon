@@ -43,12 +43,12 @@ import java.util.Map;
 
 
 public class DieselQuarry extends Quarry implements
-        RebarTickingBlock,
-        RebarDirectionalBlock,
-        RebarFluidBufferBlock,
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarLogisticBlock {
+        TickingRebarBlock,
+        DirectionalRebarBlock,
+        FluidBufferRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        LogisticRebarBlock {
 
     public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
@@ -244,14 +244,14 @@ public class DieselQuarry extends Quarry implements
 
     @Override
     public void onFluidAdded(@NotNull RebarFluid fluid, double amount) {
-        RebarFluidBufferBlock.super.onFluidAdded(fluid, amount);
+        FluidBufferRebarBlock.super.onFluidAdded(fluid, amount);
         updateQuarry();
     }
 
     @Override
-    public void onBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarFluidBufferBlock.super.onBreak(drops, context);
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override

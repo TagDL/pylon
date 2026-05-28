@@ -48,13 +48,13 @@ import java.util.Map;
 
 
 public class DieselHammerHead extends RebarBlock implements
-        RebarTickingBlock,
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarFluidBufferBlock,
-        RebarProcessor,
-        RebarDirectionalBlock,
-        RebarLogisticBlock {
+        TickingRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        FluidBufferRebarBlock,
+        ProcessorRebarBlock,
+        DirectionalRebarBlock,
+        LogisticRebarBlock {
 
     public final int goDownTimeTicks = getSettings().getOrThrow("go-down-time-ticks", ConfigAdapter.INTEGER);
     public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
@@ -243,9 +243,9 @@ public class DieselHammerHead extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
-        RebarFluidBufferBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 
     public @NotNull ItemDisplay getHammerHead() {

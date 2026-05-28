@@ -10,10 +10,10 @@ import io.github.pylonmc.pylon.content.components.ItemInputHatch;
 import io.github.pylonmc.pylon.content.components.ItemOutputHatch;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarProcessor;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.base.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.base.ProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.base.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.base.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -40,10 +40,10 @@ import java.util.Random;
 
 
 public class PalladiumCondenser extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarProcessor,
-        RebarDirectionalBlock,
-        RebarTickingBlock {
+        SimpleRebarMultiblock,
+        ProcessorRebarBlock,
+        DirectionalRebarBlock,
+        TickingRebarBlock {
 
     public final int shimmerDustPerCycle = getSettings().getOrThrow("shimmer-dust-per-cycle", ConfigAdapter.INTEGER);
     public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.INTEGER);
@@ -241,7 +241,7 @@ public class PalladiumCondenser extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        SimpleRebarMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, BIODIESEL_INPUT_HATCH)
                 .setFluidType(PylonFluids.BIODIESEL);
         getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT_HATCH)

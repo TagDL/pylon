@@ -8,7 +8,7 @@ import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarInventoryTickerItem;
+import io.github.pylonmc.rebar.item.base.InventoryTickerRebarItem;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
 import org.bukkit.NamespacedKey;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
-public class IronBloom extends RebarItem implements RebarInventoryTickerItem {
+public class IronBloom extends RebarItem implements InventoryTickerRebarItem {
 
     public static final long DAMAGE_INTERVAL = Settings.get(PylonKeys.IRON_BLOOM).getOrThrow("damage-interval", ConfigAdapter.LONG);
     public static final int UNPROTECTED_DAMAGE = Settings.get(PylonKeys.IRON_BLOOM).getOrThrow("unprotected-damage", ConfigAdapter.INTEGER);

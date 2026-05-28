@@ -42,14 +42,14 @@ import java.util.List;
 import java.util.Map;
 
 public class FluidExperienceBottler extends RebarBlock implements
-        RebarFluidBufferBlock,
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarSimpleMultiblock,
-        RebarDirectionalBlock,
-        RebarProcessor {
+        FluidBufferRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        SimpleRebarMultiblock,
+        DirectionalRebarBlock,
+        ProcessorRebarBlock {
 
     private static final int XP_AMOUNT = Settings.get(PylonKeys.LIQUID_XP_BOTTLE).getOrThrow("experience-amount", ConfigAdapter.INTEGER);
     public final double bottleProductionTime = getSettings().getOrThrow("bottle-production-time-seconds", ConfigAdapter.DOUBLE);
@@ -115,9 +115,9 @@ public class FluidExperienceBottler extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarFluidBufferBlock.super.onBreak(drops, context);
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override
@@ -173,7 +173,7 @@ public class FluidExperienceBottler extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        SimpleRebarMultiblock.super.onMultiblockFormed();
         FluidInputHatch inputHatch = getMultiblockComponent(FluidInputHatch.class, FLUID_INPUT_HATCH_POS);
         FluidInputHatch xpHatch = getMultiblockComponent(FluidInputHatch.class, EXPERIENCE_INPUT_HATCH_POS);
         Preconditions.checkState(inputHatch != null && xpHatch != null);

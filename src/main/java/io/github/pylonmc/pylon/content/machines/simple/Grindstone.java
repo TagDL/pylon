@@ -7,6 +7,8 @@ import io.github.pylonmc.pylon.recipes.GrindstoneRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.base.handler.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.base.handler.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.Settings;
@@ -49,11 +51,11 @@ import java.util.Map;
 
 
 public class Grindstone extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarInteractBlock,
-        RebarBreakHandler,
-        RebarLogisticBlock,
-        RebarRecipeProcessor<GrindstoneRecipe> {
+        SimpleRebarMultiblock,
+        InteractRebarBlockHandler,
+        BlockBreakRebarBlockHandler,
+        LogisticRebarBlock,
+        RecipeProcessorRebarBlock<GrindstoneRecipe> {
 
     public static final int CYCLE_DURATION_TICKS = Settings.get(PylonKeys.GRINDSTONE)
             .getOrThrow("cycle-duration-ticks",ConfigAdapter.INTEGER);
@@ -104,7 +106,7 @@ public class Grindstone extends RebarBlock implements
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!isFormedAndFullyLoaded()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
@@ -154,7 +156,7 @@ public class Grindstone extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
         drops.add(getItemDisplay().getItemStack());
     }
 

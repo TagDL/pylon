@@ -2,9 +2,9 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidTank;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
+import io.github.pylonmc.rebar.block.base.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.base.FluidTankRebarBlock;
+import io.github.pylonmc.rebar.block.base.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -40,7 +40,7 @@ import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
-public class FluidLimiter extends RebarBlock implements RebarDirectionalBlock, RebarFluidTank, RebarInventoryBlock {
+public class FluidLimiter extends RebarBlock implements DirectionalRebarBlock, FluidTankRebarBlock, GuiRebarBlock {
 
     private static final NamespacedKey MAX_FLOW_RATE_KEY = pylonKey("amount");
 
@@ -148,7 +148,7 @@ public class FluidLimiter extends RebarBlock implements RebarDirectionalBlock, R
 
     @Override
     public double fluidAmountRequested(@NotNull RebarFluid fluid) {
-        return Math.min(maxFlowRate, RebarFluidTank.super.fluidAmountRequested(fluid));
+        return Math.min(maxFlowRate, FluidTankRebarBlock.super.fluidAmountRequested(fluid));
     }
 
     @Override

@@ -39,12 +39,12 @@ import java.util.Map;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class FluidStrainer extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarFluidBlock,
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarLogisticBlock,
-        RebarRecipeProcessor<StrainingRecipe> {
+        DirectionalRebarBlock,
+        FluidRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        LogisticRebarBlock,
+        RecipeProcessorRebarBlock<StrainingRecipe> {
 
     private static final NamespacedKey FLUID_AMOUNT_KEY = pylonKey("fluid_amount");
     private static final NamespacedKey FLUID_TYPE_KEY = pylonKey("fluid_type");
@@ -185,8 +185,8 @@ public class FluidStrainer extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarFluidBlock.super.onBreak(drops, context);
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        FluidRebarBlock.super.onBlockBreak(drops, context);
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
     }
 }

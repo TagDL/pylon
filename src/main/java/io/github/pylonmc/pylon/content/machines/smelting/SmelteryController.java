@@ -35,9 +35,9 @@ import io.github.pylonmc.pylon.recipes.SmelteryRecipe;
 import io.github.pylonmc.pylon.util.HslColor;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
+import io.github.pylonmc.rebar.block.base.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.base.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.Config;
@@ -65,7 +65,7 @@ import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.item.ItemProvider;
 
 public final class SmelteryController extends SmelteryComponent
-        implements RebarInventoryBlock, RebarMultiblock, RebarTickingBlock {
+        implements GuiRebarBlock, RebarMultiblock, TickingRebarBlock {
 
     private static final NamespacedKey RUNNING_KEY = pylonKey("running");
     private static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");
@@ -122,7 +122,7 @@ public final class SmelteryController extends SmelteryComponent
     }
 
     @Override
-    public void postBreak(@NotNull BlockBreakContext context) {
+    public void onPostBlockBreak(@NotNull BlockBreakContext context) {
         for (SmelteryComponent component : components) {
             component.setController(null);
         }

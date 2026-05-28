@@ -9,6 +9,7 @@ import io.github.pylonmc.pylon.content.components.ItemInputHatch;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.base.handler.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -16,7 +17,6 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -39,11 +39,11 @@ import java.util.Random;
 
 
 public class BurnerHydraulicPurifier extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
-        RebarProcessor,
-        RebarInteractBlock,
+        SimpleRebarMultiblock,
+        DirectionalRebarBlock,
+        TickingRebarBlock,
+        ProcessorRebarBlock,
+        InteractRebarBlockHandler,
         HydraulicPurifier {
 
     public static final Vector3i ITEM_INPUT = new Vector3i(0, 0, 2);
@@ -204,7 +204,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
                 .setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT)
                 .setFluidType(PylonFluids.HYDRAULIC_FLUID);
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        SimpleRebarMultiblock.super.onMultiblockFormed();
     }
 
     @Override
@@ -223,7 +223,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
     }
 
     @Override
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getAction().isRightClick()) {
             event.setUseInteractedBlock(Event.Result.DENY);
         }

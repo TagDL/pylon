@@ -4,13 +4,13 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.recipes.CrudeAlloyFurnaceRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarEntityHolderBlock;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
-import io.github.pylonmc.rebar.block.base.RebarRecipeProcessor;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.base.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.base.EntityHolderRebarBlock;
+import io.github.pylonmc.rebar.block.base.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.base.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.base.RecipeProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.base.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.base.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -50,13 +50,13 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class CrudeAlloyFurnace extends RebarBlock implements
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarEntityHolderBlock,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarRecipeProcessor<CrudeAlloyFurnaceRecipe> {
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        EntityHolderRebarBlock,
+        DirectionalRebarBlock,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        RecipeProcessorRebarBlock<CrudeAlloyFurnaceRecipe> {
 
     public static final NamespacedKey FUEL_TICKS_TOTAL_KEY = pylonKey("fuel_ticks_total");
     public static final NamespacedKey FUEL_TICKS_REMAINING_KEY = pylonKey("fuel_ticks_remaining");
