@@ -19,10 +19,10 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -232,31 +232,27 @@ public class Grindstone extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         ItemStack stack = getItemDisplay().getItemStack();
+        Component contents = stack.isEmpty()
+                ? Component.empty()
+                : Component.translatable("pylon.waila.grindstone.not-empty")
+                .arguments(
+                        RebarArgument.of("item", stack.effectiveName()),
+                        RebarArgument.of("amount", stack.getAmount())
+                );
+        Component processing;
+        if (isProcessingRecipe()) {
+            processing = Component.translatable("pylon.waila.grindstone.processing").arguments(
+                    RebarArgument.of("progress", ProgressBar.recipeProgress(getRecipeProgress()))
+            );
+        } else if (!stack.isEmpty() && getNextRecipe() == null) {
+            processing = Component.translatable("pylon.waila.grindstone.invalid_recipe");
+        } else {
+            processing = Component.empty();
+        }
+
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("contents",
-                        stack.isEmpty()
-                                ? Component.translatable("pylon.waila.grindstone.empty")
-                                : Component.translatable("pylon.waila.grindstone.not-empty")
-                                .arguments(
-                                        RebarArgument.of("item", stack.effectiveName()),
-                                        RebarArgument.of("amount", stack.getAmount())
-                                )
-                ),
-                RebarArgument.of("processing",
-                        getCurrentRecipe() == null
-                                ? !stack.isEmpty() && getNextRecipe() == null
-                                        ? Component.translatable("pylon.waila.grindstone.invalid_recipe")
-                                        : Component.translatable("pylon.waila.grindstone.idle")
-                                : Component.translatable("pylon.waila.grindstone.processing")
-                                .arguments(
-                                        RebarArgument.of("bars", PylonUtils.createProgressBar(
-                                                getCurrentRecipe().timeTicks() - getRecipeTicksRemaining(),
-                                                getCurrentRecipe().timeTicks(),
-                                                20,
-                                                TextColor.color(100, 255, 100)
-                                        ))
-                                )
-                )
+                RebarArgument.of("contents", contents),
+                RebarArgument.of("processing", processing)
         ));
     }
 

@@ -15,6 +15,7 @@ import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -166,20 +167,17 @@ public abstract class CoreDrill extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        String wailaFormat = "pylon.item." + getKey().getKey() + ".waila_format";
-        Integer timeLeft = getProcessTicksRemaining();
+        if (!isProcessing()) {
+            return new WailaDisplay(getNameTranslationKey());
+        }
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-            RebarArgument.of("duration_if_any",
-                timeLeft == null
-                    ? Component.empty()
-                    : Component.translatable(wailaFormat).arguments(
-                        RebarArgument.of("duration", PylonUtils.createProgressBar(
-                                ((double) getProcessTimeTicks() - (double) getProcessTicksRemaining()) / (double) getProcessTimeTicks(),
-                                20,
-                                NamedTextColor.WHITE
-                        ))
-                    )
-            )
+                RebarArgument.of("remaining-time", new ProgressBar()
+                        .proportion(1.0 - getProcessProgress())
+                        .barColor(NamedTextColor.WHITE)
+                        .suffix(Component.text(" ")
+                                .append(UnitFormat.SECONDS.format(getProcessSecondsRemaining()).decimalPlaces(2))
+                        )
+                )
         ));
     }
 }

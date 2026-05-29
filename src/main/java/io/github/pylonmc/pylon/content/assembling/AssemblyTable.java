@@ -18,7 +18,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.RecipeInput;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
-import io.github.pylonmc.rebar.util.ProgressBarBuilder;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import net.kyori.adventure.text.Component;
@@ -293,10 +293,10 @@ public class AssemblyTable extends RebarBlock implements
         getHeldEntityOrThrow(TextDisplay.class, "tool_name")
                 .text(Component.translatable("pylon.gui.assembly_table.tools." + step.tool()));
         getHeldEntityOrThrow(TextDisplay.class, "progress").text(
-                new ProgressBarBuilder()
+                new ProgressBar()
                         .barColor(TextColor.color(120, 150, 255))
                         .proportion((double) stepIndex / recipe.steps().size())
-                        .build()
+                        .asComponent()
         );
         getHeldEntityOrThrow(TextDisplay.class, "tool_clicks_remaining").text(
                 Component.translatable("pylon.gui.assembly_table.clicks_remaining")

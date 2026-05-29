@@ -8,7 +8,6 @@ import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemInputHatch;
 import io.github.pylonmc.pylon.content.components.ItemOutputHatch;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarProcessor;
@@ -19,12 +18,9 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
-import io.github.pylonmc.rebar.util.ProgressBarBuilder;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -258,16 +254,8 @@ public class PalladiumCondenser extends RebarBlock implements
         if (timeLeft == null) {
             return new WailaDisplay(getNameTranslationKey());
         }
-
-        double proportion = ((double) getProcessTimeTicks() - (double) getProcessTicksRemaining()) / (double) getProcessTimeTicks();
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bar",
-                        new ProgressBarBuilder()
-                                .proportion(proportion)
-                                .barColor(NamedTextColor.WHITE)
-                                .build()
-                ),
-                RebarArgument.of("progress", UnitFormat.PERCENT.format(proportion * 100).significantFigures(2))
+                RebarArgument.of("progress", ProgressBar.recipeProgress(getProcessProgress()))
         ));
     }
 }

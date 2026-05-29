@@ -440,7 +440,7 @@ item:
       <arrow> Filters out items from fluids
       <arrow> <insn>Right click</insn> to open the inventory
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Fluid Strainer%info%"
+    waila: "Fluid Strainer | Straining %item% | %progress%"
 
   fluid_voider_1:
     name: "Fluid Voider <light_purple>I"
@@ -606,8 +606,7 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:shimmer_altar/></yellow>
       <diamond> 8x <yellow><item:pylon:shimmer_pedestal/></yellow>
-    waila: "Shimmer Altar%progress%"
-    progress: "| %progress%"
+    waila: "Shimmer Altar | %progress%"
 
   shimmer_pedestal:
     name: "Shimmer Pedestal"
@@ -629,7 +628,7 @@ item:
       <diamond> 2x <yellow>Lit Orange Candle</yellow>
       <diamond> 2x <yellow><item:pylon:potion_pedestal/></yellow>
       <diamond> 2x <yellow><item:pylon:shimmer_pedestal/></yellow>
-    waila: "Potion Altar%processing%"
+    waila: "Potion Altar | %progress%"
 
   potion_pedestal:
     name: "Potion Pedestal"
@@ -1212,7 +1211,7 @@ item:
       <diamond> 2x <yellow><item:pylon:copper_framed_glass></yellow>
       <diamond> 8x <yellow><item:pylon:iron_support_beam/></yellow>
       <diamond> 16x <yellow><item:pylon:bronze_grating/></yellow>
-    waila: "Burner Hydraulic Purifier | %fuel-bar% %time-remaining"
+    waila: "Burner Hydraulic Purifier | %fuel%"
 
   convection_hydraulic_purifier:
     name: "Convection Hydraulic Purifier"
@@ -1235,7 +1234,7 @@ item:
       <diamond> 2x <yellow><item:pylon:bronze_foundation/></yellow>
       <diamond> 7x <yellow><item:pylon:iron_support_beam/></yellow>
       <diamond> 7x <yellow><item:pylon:bronze_grating/></yellow>
-    waila: "Convection Hydraulic Purifier | %bar% %efficiency%"
+    waila: "Convection Hydraulic Purifier | %efficiency%"
 
   liselette_hydraulic_purifier:
     name: "Liselette Hydraulic Purifier"
@@ -1350,8 +1349,7 @@ item:
       <diamond> 1x <yellow><item:pylon:manual_core_drill/></yellow>
       <diamond> 1x <yellow><item:pylon:manual_core_drill_lever/></yellow>
       <diamond> 9x <yellow>Cobblestone Wall</yellow>
-    waila: "Manual Core Drill %duration_if_any%"
-    waila_format: "| %duration%"
+    waila: "Manual Core Drill | %remaining-time%"
 
   improved_manual_core_drill:
     name: "Improved Manual Core Drill"
@@ -1365,8 +1363,7 @@ item:
       <diamond> 1x <yellow><item:pylon:improved_manual_core_drill/></yellow>
       <diamond> 1x <yellow><item:pylon:manual_core_drill_lever/></yellow>
       <diamond> 9x <yellow>Polished Deepslate Wall</yellow>
-    waila: "Improved Manual Core Drill %duration_if_any%"
-    waila_format: "| %duration%"
+    waila: "Improved Manual Core Drill | %remaining-time%"
 
   hydraulic_core_drill:
     name: "Hydraulic Core Drill"
@@ -1387,8 +1384,7 @@ item:
       <diamond> 6x <yellow><item:pylon:bronze_grating/></yellow>
       <diamond> 12x <yellow><item:pylon:iron_support_beam/></yellow>
       <diamond> 2 or more <yellow>Fluid Tank Casing</yellow>
-    waila: "Hydraulic Core Drill %duration_if_any%"
-    waila_format: "| %duration%"
+    waila: "Hydraulic Core Drill | %remaining-time%"
 
   diesel_core_drill:
     name: "Diesel Core Drill"
@@ -1409,8 +1405,7 @@ item:
       <diamond> 9x <yellow><item:pylon:steel_support_beam/></yellow>
       <diamond> 10x <yellow><item:pylon:bronze_grating/></yellow>
       <diamond> 1 or more <yellow>Fluid Tank Casing</yellow>
-    waila: "Diesel Core Drill %duration_if_any%"
-    waila_format: "| %duration%"
+    waila: "Diesel Core Drill | %remaining-time%"
 
   iron_support_beam:
     name: "Iron Support Beam"
@@ -1757,7 +1752,7 @@ item:
       <diamond> 2x <yellow><item:pylon:smokestack_cap/></yellow>
       <diamond> 24x <yellow><item:pylon:reinforced_plating/></yellow>
       <diamond> 3 or more <yellow>Fluid Tank Casing</yellow>
-    waila: "Biorefinery | %info%"
+    waila: "Biorefinery | %fuel%"
 
   bronze_foundation:
     name: "Bronze Foundation"
@@ -2318,15 +2313,14 @@ item:
       <diamond> 8x <yellow><item:pylon:collimator_pillar/></yellow>
       <diamond> 16x <yellow><item:pylon:bronze_grating/></yellow>
       <diamond> 3 or more <yellow>Fluid Tank Casing</yellow>
-    waila: "Palladium Condenser | %bar% %duration%"
+    waila: "Palladium Condenser | %progress%"
 
   crude_alloy_furnace:
     name: "Crude Alloy Furnace"
     lore: |-
       <arrow> Smelts alloys
       <arrow> Crude and inefficient, but does the job
-    waila: "Crude Alloy Furnace%info%"
-    info: " | %progress%"
+    waila: "Crude Alloy Furnace | %progress%"
 
   kiln:
     name: "Kiln"
@@ -2337,15 +2331,16 @@ item:
       <arrow> Takes time to heat up and cool down
       
       <u>Components</u>
-      <diamond> 1x <yellow><item:pylon.item.kiln.name/></yellow>
-      <diamond> 1x <yellow><item:pylon.item.bronze_grating.name/></yellow>
-      <diamond> 1x <yellow><item:pylon.item.fluid_output_hatch.name/></yellow>
-      <diamond> 1x <yellow><item:pylon.item.item_output_hatch.name/></yellow>
-      <diamond> 2x <yellow><item:pylon.item.item_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><item:pylon:item.kiln/></yellow>
+      <diamond> 1x <yellow><item:pylon:item.bronze_grating/></yellow>
+      <diamond> 1x <yellow><item:pylon:item.fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:item.item_output_hatch/></yellow>
+      <diamond> 2x <yellow><item:pylon:item.item_input_hatch/></yellow>
       <diamond> 6x <yellow>Mud Bricks</yellow>
       <diamond> 12x <yellow>Mud Brick Wall</yellow>
 
-    waila: "Kiln | %temperature-bar%%progress%"
+    waila-1: "Kiln | %temperature%"
+    waila-2: "Kiln | %temperature% | %progress%"
 
   slag:
     name: "Slag"
@@ -2533,7 +2528,7 @@ item:
       <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
-    waila: "Hydraulic Experience Bottler | %progressbar%"
+    waila: "Hydraulic Experience Bottler | %progress%"
 
   diesel_experience_bottler:
     name: "Diesel Experience Bottler"
@@ -2546,7 +2541,7 @@ item:
       <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
-    waila: "Diesel Experience Bottler | %progressbar%"
+    waila: "Diesel Experience Bottler | %progress%"
 
 fluid:
   tag:
@@ -2593,13 +2588,9 @@ waila:
     liquid:
       empty: "No fluid"
       filled: "%bar% (%fluid%)"
-  fluid_strainer:
-    straining: " | Straining %item% | %bars%"
   grindstone:
-    empty: ""
     not-empty: " | %item% x%amount%"
-    idle: ""
-    processing: " | %bars%"
+    processing: " | %progress%"
     invalid_recipe: " | <red>Invalid recipe"
   potion_altar:
     idle: ""
@@ -2806,7 +2797,6 @@ message:
     working: "%bars% (%fluid%)"
   biorefinery:
     no_fuel: "<red>No fuel"
-    has_fuel: "%fuel-bar% %remaining-time%"
   hammer_cant_use: "<red>You cannot use this hammer on this block"
   sprinkler_too_close: "<red>You cannot place sprinklers within %radius% blocks of each other"
   gained_research_points: "<green>+%points% research points (%total% points total)"

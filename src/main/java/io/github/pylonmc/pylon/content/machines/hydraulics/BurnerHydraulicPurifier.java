@@ -13,11 +13,9 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
-import io.github.pylonmc.rebar.util.ProgressBarBuilder;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Lightable;
@@ -209,17 +207,11 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (getProcessTicksRemaining() == null) {
+        if (!isProcessing()) {
             return new WailaDisplay(getNameTranslationKey());
         }
-
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("fuel-bar", new ProgressBarBuilder()
-                        .proportion((double) getProcessTicksRemaining() / getProcessTimeTicks())
-                        .barColor(TextColor.color(200, 108, 29))
-                        .build()
-                ),
-                RebarArgument.of("time-remaining", UnitFormat.SECONDS.format(getProcessTicksRemaining() / 20))
+                RebarArgument.of("fuel", ProgressBar.fuelRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining()))
         ));
     }
 

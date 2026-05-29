@@ -100,10 +100,6 @@ public class PylonUtils {
         return Color.fromRGB(r, g, b);
     }
 
-    public @NotNull TextColor colorToTextColor(@NonNull Color color) {
-        return TextColor.color(color.getRed(), color.getGreen(), color.getBlue());
-    }
-
     private int clampAndRound(double value) {
         int rounded = (int) Math.round(value);
         return Math.max(0, Math.min(255, rounded));
@@ -132,19 +128,6 @@ public class PylonUtils {
 
     public @NotNull Vector3d getDirection(@NotNull Location source, @NotNull Location target) {
         return getDisplacement(source, target).normalize();
-    }
-
-    public @NotNull Component createProgressBar(double progress, int bars, TextColor color) {
-        int filledBars = (int) Math.round(bars * progress);
-        return Component.translatable("pylon.gui.progress_bar.text").arguments(
-                RebarArgument.of("filled_bars", Component.text("|".repeat(filledBars)).color(color)),
-                RebarArgument.of("empty_bars", "|".repeat(bars - filledBars)),
-                RebarArgument.of("progress", UnitFormat.PERCENT.format(progress * 100).significantFigures(2))
-        );
-    }
-
-    public @NotNull Component createProgressBar(double amount, double max, int bars, TextColor color) {
-        return createProgressBar(amount / max, bars, color);
     }
 
     public @NotNull Component createFluidAmountBar(double amount, double capacity, int bars, TextColor fluidColor) {

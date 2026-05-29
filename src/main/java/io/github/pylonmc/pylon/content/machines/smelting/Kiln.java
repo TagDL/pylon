@@ -20,12 +20,13 @@ import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
-import io.github.pylonmc.rebar.util.ProgressBarBuilder;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -391,24 +392,21 @@ public class Kiln extends RebarBlock implements
             return new WailaDisplay(getNameTranslationKey());
         }
 
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("temperature-bar", new ProgressBarBuilder()
-                        .proportion(temperature / maxTemperature)
-                        .barColor(PylonUtils.colorFromTemperature(temperature))
-                        .bars(30)
-                        .suffix(UnitFormat.CELSIUS.format(temperature).decimalPlaces(1))
-                        .build()
-                ),
-                RebarArgument.of("progress", getRecipeProgress() == null
-                        ? Component.empty()
-                        : Component.translatable("pylon.waila.kiln").arguments(
-                        RebarArgument.of("progress", new ProgressBarBuilder()
-                                .proportion(1.0 - getRecipeProgress())
-                                .barColor(NamedTextColor.WHITE)
-                                .suffix(UnitFormat.PERCENT.format(100 * (1 - getRecipeProgress())).decimalPlaces(1))
-                                .build()
-                        )
-                ))
+        ComponentLike temperatureBar = new ProgressBar()
+                .proportion((temperature - minTemperature) / maxTemperature)
+                .barColor(PylonUtils.colorFromTemperature(temperature))
+                .bars(30)
+                .suffix(Component.text(" ").append(UnitFormat.CELSIUS.format(temperature).decimalPlaces(1)));
+
+        if (getRecipeProgress() == null) {
+            return new WailaDisplay(Component.translatable("pylon.item.kiln.waila-1").arguments(
+                    RebarArgument.of("temperature", temperatureBar)
+            ));
+        }
+
+        return new WailaDisplay(Component.translatable("pylon.item.kiln.waila-2").arguments(
+                RebarArgument.of("temperature", temperatureBar),
+                RebarArgument.of("progress", ProgressBar.recipeProgress(getRecipeProgress()))
         ));
     }
 

@@ -16,10 +16,11 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.util.ProgressBarBuilder;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -232,12 +233,13 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
         }
 
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bar", new ProgressBarBuilder()
-                        .barColor(NamedTextColor.WHITE)
+                RebarArgument.of("efficiency", new ProgressBar()
+                        .barColor(TextColor.fromHexString("#e0c77d"))
                         .proportion((getEfficiency() - basePurificationEfficiency) / (maxPurificationEfficiency - basePurificationEfficiency))
-                        .build()
-                ),
-                RebarArgument.of("efficiency", UnitFormat.PERCENT.format(100 * getEfficiency()).decimalPlaces(2))
+                        .suffix(Component.text(" ")
+                                .append(UnitFormat.PERCENT.format(100 * getEfficiency()).decimalPlaces(2))
+                        )
+                )
         ));
     }
 

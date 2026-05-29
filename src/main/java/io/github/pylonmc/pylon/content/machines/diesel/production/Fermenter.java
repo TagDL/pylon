@@ -19,7 +19,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
-import io.github.pylonmc.rebar.util.ProgressBarBuilder;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -216,10 +216,9 @@ public class Fermenter extends RebarBlock implements
                 ? 0
                 : Math.min(sugarcaneCapacity, (int) (sugarcaneProportion * sugarcaneCapacity) + 1);
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("sugarcane-bar", new ProgressBarBuilder()
+                RebarArgument.of("sugarcane-bar", new ProgressBar()
                         .proportion(sugarcaneProportion)
                         .barColor(PylonFluids.SUGARCANE)
-                        .build()
                 ),
                 RebarArgument.of("sugarcane-amount", sugarcaneAmount)
         ));
