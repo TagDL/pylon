@@ -171,13 +171,10 @@ public abstract class CoreDrill extends RebarBlock implements
             return new WailaDisplay(getNameTranslationKey());
         }
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("remaining-time", new ProgressBar()
-                        .proportion(1.0 - getProcessProgress())
-                        .barColor(NamedTextColor.WHITE)
-                        .suffix(Component.text(" ")
-                                .append(UnitFormat.SECONDS.format(getProcessSecondsRemaining()).decimalPlaces(2))
-                        )
-                )
+                RebarArgument.of("remaining-time", ProgressBar.timeRemaining(
+                        getProcessTimeSeconds(),
+                        getProcessSecondsRemaining()
+                ))
         ));
     }
 }

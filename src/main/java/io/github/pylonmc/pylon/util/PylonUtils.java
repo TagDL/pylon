@@ -130,16 +130,6 @@ public class PylonUtils {
         return getDisplacement(source, target).normalize();
     }
 
-    public @NotNull Component createFluidAmountBar(double amount, double capacity, int bars, TextColor fluidColor) {
-        int filledBars = Math.max(0, (int) Math.round(bars * amount / capacity));
-        return Component.translatable("pylon.gui.fluid_amount_bar.text").arguments(
-                RebarArgument.of("filled_bars", Component.text("|".repeat(filledBars)).color(fluidColor)),
-                RebarArgument.of("empty_bars", Component.text("|".repeat(bars - filledBars)).color(NamedTextColor.GRAY)),
-                RebarArgument.of("amount", Math.round(amount)),
-                RebarArgument.of("capacity", UnitFormat.MILLIBUCKETS.format(Math.round(capacity)))
-        );
-    }
-
     /**
      * @param display if null nothing gets done
      */

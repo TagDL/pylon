@@ -17,6 +17,7 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.item.base.RebarInteractor;
 import io.github.pylonmc.rebar.util.RandomizedSound;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -72,17 +73,15 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
                 RebarArgument.of("range", UnitFormat.BLOCKS.format(Math.round(projectileSpeedBlocksPerSecond * projectileLifetimeTicks / 20.0))),
                 RebarArgument.of("speed", UnitFormat.BLOCKS_PER_SECOND.format(projectileSpeedBlocksPerSecond)),
                 RebarArgument.of("hydraulic-fluid-per-shot", UnitFormat.MILLIBUCKETS.format(hydraulicFluidPerShot)),
-                RebarArgument.of("hydraulic-fluid", PylonUtils.createFluidAmountBar(
-                        getHydraulicFluid(),
+                RebarArgument.of("hydraulic-fluid", ProgressBar.fluidContents(
+                        PylonFluids.HYDRAULIC_FLUID,
                         HYDRAULIC_FLUID_CAPACITY,
-                        20,
-                        TextColor.fromHexString("#212d99")
+                        getHydraulicFluid()
                 )),
-                RebarArgument.of("dirty-hydraulic-fluid", PylonUtils.createFluidAmountBar(
-                        getDirtyHydraulicFluid(),
+                RebarArgument.of("dirty-hydraulic-fluid", ProgressBar.fluidContents(
+                        PylonFluids.DIRTY_HYDRAULIC_FLUID,
                         DIRTY_HYDRAULIC_FLUID_CAPACITY,
-                        20,
-                        TextColor.fromHexString("#48459b")
+                        getDirtyHydraulicFluid()
                 ))
         );
     }

@@ -21,6 +21,7 @@ import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.recipe.FluidOrItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.datacomponent.DataComponentTypes;
@@ -224,24 +225,19 @@ public final class Crucible extends RebarBlock implements
     @Override
     public @NotNull WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-            RebarArgument.of("item_info", processingType == null ?
-                Component.translatable("pylon.waila.crucible.item.empty") :
-                Component.translatable("pylon.waila.crucible.item.stored",
-                    RebarArgument.of("type", processingType.getData(DataComponentTypes.ITEM_NAME)),
-                    RebarArgument.of("amount", amount)
-                )),
 
-            RebarArgument.of("liquid_info", getFluidType() == null ?
-                Component.translatable("pylon.waila.crucible.liquid.empty") :
-                Component.translatable("pylon.waila.crucible.liquid.filled",
-                    RebarArgument.of("fluid", getFluidType().getName()),
-                    RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
+                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+                        getFluidType(),
                         getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
-                    ))
-                ))
+                        getFluidAmount()
+                )),
+                RebarArgument.of("item", processingType == null ?
+                        Component.translatable("pylon.item.crucible.empty") :
+                        Component.translatable("pylon.item.crucible.not-empty",
+                                RebarArgument.of("type", processingType.getData(DataComponentTypes.ITEM_NAME)),
+                                RebarArgument.of("amount", amount)
+                        )
+                )
         ));
     }
 

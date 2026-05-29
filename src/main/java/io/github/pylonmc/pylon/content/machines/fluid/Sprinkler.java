@@ -20,6 +20,7 @@ import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.event.player.PlayerFlowerPotManipulateEvent;
@@ -93,12 +94,11 @@ public class Sprinkler extends RebarBlock
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.WATER),
+                RebarArgument.of("fluid", ProgressBar.fluidContents(
+                        PylonFluids.WATER,
                         fluidCapacity(PylonFluids.WATER),
-                        20,
-                        NamedTextColor.BLUE
-                ))
+                        fluidAmount(PylonFluids.WATER))
+                )
         ));
     }
 

@@ -24,6 +24,7 @@ import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -186,18 +187,14 @@ public class DieselMixingAttachment extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                // Old:
-                //RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                //        fluidAmount(PylonFluids.BIODIESEL),
-                //        fluidCapacity(PylonFluids.BIODIESEL),
-                //        20,
-                //        TextColor.fromHexString("#eaa627")
-                //)),
-                // New:
-                RebarArgument.of("bar", ProgressBar.fluidContents(
+                RebarArgument.of("diesel", ProgressBar.fluidContents(
                         PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
                         fluidAmount(PylonFluids.BIODIESEL))
+                ),
+                RebarArgument.of("progress", isProcessing()
+                        ? ProgressBar.timeRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining())
+                        : Component.translatable("pylon.waila.idle")
                 )
         ));
     }
