@@ -33,6 +33,8 @@ public class SleepingBag extends RebarBlock implements RebarBed {
 
     @Override
     public void postInitialise() {
+        // At the time of the creation constructor only one half of the bed will be placed & the player won't have received
+        // confirmation it has been placed yet, so we need to let it finish placing and then attempt to sleep, hence the tick delay
         Bukkit.getScheduler().runTask(Pylon.getInstance(), () -> {
             Block bedHead = getBlock();
             if (bedHead.getBlockData() instanceof Bed bedData && bedData.getPart() != Bed.Part.HEAD) {
@@ -56,6 +58,7 @@ public class SleepingBag extends RebarBlock implements RebarBed {
     }
 
     private void scheduleBreak() {
+        // We need to let the bed leave event finish processing before breaking the block
         Bukkit.getScheduler().runTask(Pylon.getInstance(), () -> {
             if (player != null) {
                 player.breakBlock(getBlock());
