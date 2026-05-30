@@ -4,9 +4,11 @@ import io.github.pylonmc.pylon.content.machines.fluid.multiblock.FluidTankCasing
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarGhostBlockHolder;
 import io.github.pylonmc.rebar.block.base.RebarMultiblock;
+import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -37,7 +39,7 @@ import java.util.List;
 import java.util.Set;
 
 public class FluidTank extends RebarBlock
-        implements RebarMultiblock, FluidTankWithDisplayEntity, RebarDirectionalBlock, RebarGhostBlockHolder {
+        implements RebarMultiblock, FluidTankWithDisplayEntity, RebarDirectionalBlock, RebarGhostBlockHolder, RebarBreakHandler {
 
     private static final Vector3i CASING_POSITION = new Vector3i(0, 1, 0);
 
@@ -150,6 +152,11 @@ public class FluidTank extends RebarBlock
             setFluid(0);
             setFluidType(null);
         }
+    }
+
+    @Override
+    public void postBreak(@NotNull BlockBreakContext context) {
+        casings.forEach(FluidTankCasing::reset);
     }
 
     @Override

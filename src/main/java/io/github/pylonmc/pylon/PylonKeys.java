@@ -484,4 +484,6 @@ public class PylonKeys {
     public static final NamespacedKey LIQUID_XP_BOTTLE = pylonKey("liquid_xp_bottle");
     public static final NamespacedKey LIQUID_XP_BOTTLE_SUPER = pylonKey("liquid_xp_bottle_super");
     public static final NamespacedKey LIQUID_XP_BOTTLE_ULTRA = pylonKey("liquid_xp_bottle_ultra");
+
+    public static final NamespacedKey SLEEPING_BAG = pylonKey("sleeping_bag");
 }

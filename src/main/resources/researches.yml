@@ -99,7 +99,6 @@ smelting_1:
   item: pylon:smeltery_controller
   cost: 5
   unlocks:
-  - pylon:crude_alloy_kiln
   - pylon:bronze_ingot
   - pylon:bronze_dust
   - pylon:bronze_sheet
@@ -568,7 +567,6 @@ components_1:
   - pylon:item_input_hatch
   - pylon:item_output_hatch
   - pylon:iron_support_beam
-  - pylon:bronze_support_beam
   - pylon:bronze_foundation
   - pylon:bronze_grating
   - pylon:copper_framed_glass

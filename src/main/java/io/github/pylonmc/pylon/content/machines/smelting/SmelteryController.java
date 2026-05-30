@@ -563,9 +563,6 @@ public final class SmelteryController extends SmelteryComponent
                 applyHeat();
                 performRecipes();
             }
-            if (Math.abs(oldTemperature - temperature) < 1e-6) {
-                refreshBlockTextureItem();
-            }
             if (Math.abs(oldTemperature - temperature) < 1e-6 || temperature > avgTarget) {
                 // See https://www.desmos.com/calculator/cqwav0k4nj; you can never reach the target temperature if cooling
                 // and heating are running concurrently, so we apply cooling only if heating hasn't changed the temperature

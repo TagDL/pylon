@@ -97,7 +97,7 @@ public class FluidExperienceBottler extends RebarBlock implements
         }
         setFacing(ctx.getFacing());
         setMultiblockDirection(ctx.getFacing());
-        setProcessProgressItem(new ProgressItem(ItemStackBuilder.of(PylonItems.LIQUID_XP_BOTTLE), false));
+        setProcessProgressItem(new ProgressItem(PylonItems.LIQUID_XP_BOTTLE, false));
     }
 
     public FluidExperienceBottler(@NotNull Block block, PersistentDataContainer pdc) {
