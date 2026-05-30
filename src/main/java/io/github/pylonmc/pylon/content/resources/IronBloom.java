@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon.content.resources;
 
 import com.google.common.base.Preconditions;
+import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
