@@ -1,6 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
-import io.github.pylonmc.rebar.block.base.FluidTankRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
 import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;

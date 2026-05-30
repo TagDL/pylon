@@ -2,8 +2,8 @@ package io.github.pylonmc.pylon.content.building;
 
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.handler.BlockBreakRebarBlockHandler;
-import io.github.pylonmc.rebar.block.base.handler.PistonRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.PistonRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;

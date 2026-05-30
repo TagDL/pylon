@@ -1,7 +1,7 @@
 package io.github.pylonmc.pylon.content.building;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.handler.EntityChangeRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.EntityChangeRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import org.bukkit.block.Block;

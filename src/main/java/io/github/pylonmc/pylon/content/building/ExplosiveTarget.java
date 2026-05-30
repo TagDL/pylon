@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.handler.TargetRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.TargetRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;

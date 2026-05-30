@@ -3,7 +3,7 @@ package io.github.pylonmc.pylon.util;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.rebar.block.BlockStorage;
-import io.github.pylonmc.rebar.block.base.FluidTankRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.ItemTypeWrapper;
 import io.github.pylonmc.rebar.item.RebarItem;

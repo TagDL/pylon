@@ -1,7 +1,7 @@
 package io.github.pylonmc.pylon.content.machines.simple;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.EntityHolderRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.EntityHolderRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;

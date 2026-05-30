@@ -2,9 +2,9 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 
 import io.github.pylonmc.pylon.content.machines.fluid.gui.FluidSelector;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.base.FluidRebarBlock;
-import io.github.pylonmc.rebar.block.base.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;

@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.content.tools;
 
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.handler.SplashPotionRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.SplashPotionRebarItemHandler;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.ZombieVillager;

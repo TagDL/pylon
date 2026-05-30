@@ -12,10 +12,10 @@ import java.util.List;
 
 import io.github.pylonmc.pylon.api.MeltingPoint;
 import io.github.pylonmc.pylon.recipes.MeltingRecipe;
-import io.github.pylonmc.rebar.block.base.handler.BlockBreakRebarBlockHandler;
-import io.github.pylonmc.rebar.block.base.LogisticRebarBlock;
-import io.github.pylonmc.rebar.block.base.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.base.handler.VanillaInventoryRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VanillaInventoryRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;

@@ -1,8 +1,8 @@
 package io.github.pylonmc.pylon.content.machines.hydraulics;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarMultiblock;
-import io.github.pylonmc.rebar.block.base.ProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;

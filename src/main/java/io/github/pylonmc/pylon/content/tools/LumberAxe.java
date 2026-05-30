@@ -3,7 +3,7 @@ package io.github.pylonmc.pylon.content.tools;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.handler.BlockBreakRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.BlockBreakRebarItemHandler;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.Tool;

@@ -3,7 +3,7 @@ package io.github.pylonmc.pylon.content.machines.fluid.multiblock;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.content.machines.fluid.FluidTankCasing;
 import io.github.pylonmc.rebar.block.RebarBlockSchema;
-import io.github.pylonmc.rebar.block.base.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
 import io.github.pylonmc.rebar.event.RebarRegisterEvent;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import org.bukkit.Bukkit;

@@ -8,7 +8,7 @@ import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.InventoryTickerRebarItem;
+import io.github.pylonmc.rebar.item.interfaces.InventoryTickerRebarItem;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
 import org.bukkit.NamespacedKey;

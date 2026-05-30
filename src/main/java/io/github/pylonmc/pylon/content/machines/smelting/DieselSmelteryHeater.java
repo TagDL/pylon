@@ -15,10 +15,10 @@ import java.util.Map;
 
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.util.PylonUtils;
-import io.github.pylonmc.rebar.block.base.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.base.FluidBufferRebarBlock;
-import io.github.pylonmc.rebar.block.base.NoVanillaInventoryRebarBlock;
-import io.github.pylonmc.rebar.block.base.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.NoVanillaInventoryRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;

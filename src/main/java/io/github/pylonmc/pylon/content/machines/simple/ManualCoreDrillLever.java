@@ -3,7 +3,7 @@ package io.github.pylonmc.pylon.content.machines.simple;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.handler.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import org.bukkit.Bukkit;

@@ -4,6 +4,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 import com.destroystokyo.paper.ParticleBuilder;
 
+import io.github.pylonmc.rebar.item.interfaces.InteractRebarItemHandler;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
@@ -45,8 +46,7 @@ import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.handler.ConsumeRebarItemHandler;
-import io.github.pylonmc.rebar.item.base.handler.InteractRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.ConsumeRebarItemHandler;
 import io.github.pylonmc.rebar.item.research.Research;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.registry.RegistryKey;

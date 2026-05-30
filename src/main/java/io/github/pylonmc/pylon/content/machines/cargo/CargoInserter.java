@@ -1,10 +1,10 @@
 package io.github.pylonmc.pylon.content.machines.cargo;
 
 import io.github.pylonmc.rebar.block.BlockStorage;
-import io.github.pylonmc.rebar.block.base.CargoRebarBlock;
-import io.github.pylonmc.rebar.block.base.EntityCulledRebarBlock;
-import io.github.pylonmc.rebar.block.base.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.base.handler.CargoRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.EntityCulledRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.content.cargo.CargoDuct;

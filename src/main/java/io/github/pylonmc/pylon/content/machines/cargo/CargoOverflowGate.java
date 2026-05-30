@@ -2,10 +2,10 @@ package io.github.pylonmc.pylon.content.machines.cargo;
 
 import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.CargoRebarBlock;
-import io.github.pylonmc.rebar.block.base.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.base.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.base.VirtualInventoryRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;

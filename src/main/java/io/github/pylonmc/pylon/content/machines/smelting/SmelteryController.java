@@ -4,6 +4,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 import com.google.common.base.Preconditions;
 
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
 
@@ -35,9 +36,9 @@ import io.github.pylonmc.pylon.recipes.SmelteryRecipe;
 import io.github.pylonmc.pylon.util.HslColor;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
-import io.github.pylonmc.rebar.block.base.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarMultiblock;
-import io.github.pylonmc.rebar.block.base.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.Config;
@@ -65,7 +66,7 @@ import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.item.ItemProvider;
 
 public final class SmelteryController extends SmelteryComponent
-        implements GuiRebarBlock, RebarMultiblock, TickingRebarBlock {
+        implements GuiRebarBlock, RebarMultiblock, TickingRebarBlock, BlockBreakRebarBlockHandler {
 
     private static final NamespacedKey RUNNING_KEY = pylonKey("running");
     private static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");

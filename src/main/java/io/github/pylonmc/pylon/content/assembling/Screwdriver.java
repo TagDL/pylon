@@ -6,7 +6,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.handler.BlockInteractRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.BlockInteractRebarItemHandler;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;

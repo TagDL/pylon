@@ -1,10 +1,9 @@
 package io.github.pylonmc.pylon.content.tools.base;
 
-import io.github.pylonmc.rebar.item.base.handler.ArrowRebarItemHandler;
-import io.github.pylonmc.rebar.item.base.handler.BlockBreakRebarItemHandler;
-import io.github.pylonmc.rebar.item.base.handler.BowRebarItemHandler;
-import io.github.pylonmc.rebar.item.base.handler.BucketRebarItemHandler;
-import io.github.pylonmc.rebar.item.base.handler.EntityAttackRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.ArrowRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.BlockBreakRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.BowRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.BucketRebarItemHandler;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;

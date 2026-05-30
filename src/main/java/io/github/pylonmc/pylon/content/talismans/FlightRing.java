@@ -1,7 +1,7 @@
 package io.github.pylonmc.pylon.content.talismans;
 
 import io.github.pylonmc.pylon.PylonKeys;
-import io.github.pylonmc.rebar.item.base.handler.JoinRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.JoinRebarItemHandler;
 import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;

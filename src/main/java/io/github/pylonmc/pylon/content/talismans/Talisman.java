@@ -3,7 +3,7 @@ package io.github.pylonmc.pylon.content.talismans;
 import io.github.pylonmc.pylon.PylonConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.InventoryEffectRebarItem;
+import io.github.pylonmc.rebar.item.interfaces.InventoryEffectRebarItem;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

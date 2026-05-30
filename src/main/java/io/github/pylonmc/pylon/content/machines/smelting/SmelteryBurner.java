@@ -1,5 +1,10 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
 import net.kyori.adventure.text.Component;
 
 import org.bukkit.Material;
@@ -12,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-import io.github.pylonmc.rebar.block.base.*;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;

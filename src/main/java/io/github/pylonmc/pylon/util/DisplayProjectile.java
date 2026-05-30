@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.util;
 
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.rebar.entity.RebarEntity;
-import io.github.pylonmc.rebar.entity.base.TickingRebarEntity;
+import io.github.pylonmc.rebar.entity.interfaces.TickingRebarEntity;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.LineBuilder;
 import org.bukkit.Location;

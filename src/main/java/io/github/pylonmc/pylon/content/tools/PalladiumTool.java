@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.content.tools;
 
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RepairableRebarItem;
+import io.github.pylonmc.rebar.item.interfaces.RepairableRebarItem;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;

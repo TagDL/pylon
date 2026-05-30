@@ -4,9 +4,9 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.handler.BlockInteractRebarItemHandler;
-import io.github.pylonmc.rebar.item.base.handler.BucketRebarItemHandler;
-import io.github.pylonmc.rebar.item.base.handler.DispenseRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.BlockInteractRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.BucketRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.DispenseRebarItemHandler;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -26,7 +26,10 @@ import java.util.List;
 import java.util.Random;
 
 
-public class WateringCan extends RebarItem implements BlockInteractRebarItemHandler, BucketRebarItemHandler, DispenseRebarItemHandler {
+public class WateringCan extends RebarItem implements
+        BlockInteractRebarItemHandler,
+        BucketRebarItemHandler,
+        DispenseRebarItemHandler {
 
     public final WateringSettings settings = WateringSettings.fromConfig(getSettings());
 
@@ -150,7 +153,7 @@ public class WateringCan extends RebarItem implements BlockInteractRebarItemHand
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST)
-    public void onDispense(@NotNull BlockDispenseEvent event, @NotNull EventPriority priority) {
+    public void onDispensed(@NotNull BlockDispenseEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 }

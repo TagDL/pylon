@@ -4,9 +4,9 @@ import io.github.pylonmc.pylon.content.machines.fluid.multiblock.FluidTankCasing
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.base.GhostBlockHolderRebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GhostBlockHolderRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RebarMultiblock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
