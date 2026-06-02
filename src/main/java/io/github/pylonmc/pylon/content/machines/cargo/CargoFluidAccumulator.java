@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import kotlin.Pair;
@@ -259,11 +260,10 @@ public class CargoFluidAccumulator extends RebarBlock implements
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
                 RebarArgument.of("item-threshold", UnitFormat.ITEMS.format(itemThreshold)),
                 RebarArgument.of("fluid-threshold", UnitFormat.MILLIBUCKETS.format(fluidThreshold)),
-                RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
+                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+                        getFluidType(),
                         getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
+                        getFluidAmount()
                 ))
         ));
     }

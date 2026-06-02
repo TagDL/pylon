@@ -21,6 +21,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.format.TextColor;
@@ -122,11 +123,10 @@ public class Collimator extends RebarBlock implements
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey()
                 .arguments(
-                        RebarArgument.of("fluid-bar", PylonUtils.createFluidAmountBar(
-                                getFluidAmount(),
+                        RebarArgument.of("fluid", ProgressBar.fluidContents(
+                                PylonFluids.OBSCYRA,
                                 getFluidCapacity(),
-                                20,
-                                TextColor.fromHexString("#000000")
+                                getFluidAmount()
                         )),
                         RebarArgument.of("time-remaining", UnitFormat.SECONDS.format(getProcessTicksRemaining() / 20))
                 )

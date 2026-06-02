@@ -19,12 +19,11 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -234,23 +233,12 @@ public class Biorefinery extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (isProcessing()) {
-            double percent = (double) getProcessTicksRemaining() / getProcessTimeTicks();
-            return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                    RebarArgument.of("info", Component.translatable("pylon.message.biorefinery.has_fuel").arguments(
-                            RebarArgument.of("fuel-bar", PylonUtils.createBar(
-                                    percent,
-                                    20,
-                                    TextColor.color(255, 200, 50)
-                            )),
-                            RebarArgument.of("remaining-time", UnitFormat.SECONDS.format(getProcessTicksRemaining() / 20))
-                    ))
-            ));
-        } else {
-            return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                    RebarArgument.of("info", Component.translatable("pylon.message.biorefinery.no_fuel"))
-            ));
-        }
+        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
+                RebarArgument.of("fuel", isProcessing()
+                        ? ProgressBar.fuelRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining())
+                        : Component.translatable("pylon.message.biorefinery.no_fuel")
+                )
+        ));
     }
 
     public record Fuel(

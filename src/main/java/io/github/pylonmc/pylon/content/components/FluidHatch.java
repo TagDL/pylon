@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -138,11 +139,10 @@ public abstract class FluidHatch extends RebarBlock implements
         } else {
             info = Component.translatable("pylon.message.fluid_hatch.working")
                     .arguments(
-                            RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                                    fluidAmount(fluid),
+                            RebarArgument.of("fluid-bar", ProgressBar.fluidContents(
+                                    fluid,
                                     fluidCapacity(fluid),
-                                    20,
-                                    TextColor.color(200, 255, 255)
+                                    fluidAmount(fluid)
                             )),
                             RebarArgument.of("fluid", fluid.getName())
                     );

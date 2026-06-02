@@ -5,7 +5,6 @@ import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemInputHatch;
 import io.github.pylonmc.pylon.content.components.ReinforcedGlassCasing;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
@@ -20,10 +19,10 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
@@ -217,10 +216,10 @@ public class Fermenter extends RebarBlock implements
                 ? 0
                 : Math.min(sugarcaneCapacity, (int) (sugarcaneProportion * sugarcaneCapacity) + 1);
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("sugarcane-bar", PylonUtils.createBar(
-                        sugarcaneProportion,
-                        20, TextColor.color(163, 237, 45)
-                )),
+                RebarArgument.of("sugarcane-bar", new ProgressBar()
+                        .proportion(sugarcaneProportion)
+                        .barColor(PylonFluids.SUGARCANE)
+                ),
                 RebarArgument.of("sugarcane-amount", sugarcaneAmount)
         ));
     }

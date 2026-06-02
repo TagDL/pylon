@@ -24,6 +24,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.LogisticSlot;
 import io.github.pylonmc.rebar.recipe.FluidOrItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.datacomponent.DataComponentTypes;
@@ -223,24 +224,19 @@ public final class Crucible extends RebarBlock implements
     @Override
     public @NotNull WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-            RebarArgument.of("item_info", crucibleContent == null ?
-                Component.translatable("pylon.waila.crucible.item.empty") :
-                Component.translatable("pylon.waila.crucible.item.stored",
-                    RebarArgument.of("type", crucibleContent.getData(DataComponentTypes.ITEM_NAME)),
-                    RebarArgument.of("amount", crucibleContent.getAmount())
-                )),
 
-            RebarArgument.of("liquid_info", getFluidType() == null ?
-                Component.translatable("pylon.waila.crucible.liquid.empty") :
-                Component.translatable("pylon.waila.crucible.liquid.filled",
-                    RebarArgument.of("fluid", getFluidType().getName()),
-                    RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
+                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+                        getFluidType(),
                         getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
-                    ))
-                ))
+                        getFluidAmount()
+                )),
+                RebarArgument.of("item", crucibleContent == null
+                        ? Component.translatable("pylon.item.crucible.empty")
+                        : Component.translatable("pylon.item.crucible.not-empty",
+                                RebarArgument.of("type", crucibleContent.getData(DataComponentTypes.ITEM_NAME)),
+                                RebarArgument.of("amount", crucibleContent.getAmount())
+                        )
+                )
         ));
     }
 

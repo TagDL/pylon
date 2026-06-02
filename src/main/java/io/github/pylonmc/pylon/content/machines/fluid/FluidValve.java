@@ -1,6 +1,5 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidTank;
@@ -17,11 +16,11 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RebarUtils;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import kotlin.Pair;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -130,16 +129,11 @@ public class FluidValve extends RebarBlock
                 RebarArgument.of("status", Component.translatable(
                         "pylon.message.valve." + (open ? "open" : "closed")
                 )),
-                RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
+                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+                        getFluidType(),
                         getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
-                )),
-                RebarArgument.of("fluid", getFluidType() == null
-                        ? Component.translatable("pylon.fluid.none")
-                        : getFluidType().getName()
-                )
+                        getFluidAmount()
+                ))
         ));
     }
 

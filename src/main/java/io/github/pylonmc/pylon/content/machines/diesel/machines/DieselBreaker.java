@@ -20,6 +20,7 @@ import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -274,12 +275,15 @@ public class DieselBreaker extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.BIODIESEL),
+                RebarArgument.of("fluid", ProgressBar.fluidContents(
+                        PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        20,
-                        TextColor.fromHexString("#eaa627")
-                ))
+                        fluidAmount(PylonFluids.BIODIESEL))
+                ),
+                RebarArgument.of("progress", isProcessing()
+                        ? ProgressBar.recipeProgress(getProcessProgress())
+                        : Component.translatable("pylon.waila.idle")
+                )
         ));
     }
 

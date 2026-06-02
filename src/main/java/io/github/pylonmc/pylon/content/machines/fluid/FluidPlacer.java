@@ -14,6 +14,7 @@ import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.event.block.BlockPreDispenseEvent;
@@ -84,12 +85,11 @@ public class FluidPlacer extends RebarBlock implements RebarFluidBufferBlock, Re
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                        fluidAmount(fluid),
+                RebarArgument.of("fluid", ProgressBar.fluidContents(
+                        fluid,
                         fluidCapacity(fluid),
-                        20,
-                        TextColor.color(200, 255, 255)
-                ))
+                        fluidAmount(fluid))
+                )
         ));
     }
 

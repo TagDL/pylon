@@ -6,7 +6,6 @@ import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.machines.fluid.FluidTank;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
@@ -17,6 +16,7 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
@@ -228,22 +228,17 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (!isFormedAndFullyLoaded()) {
+        if (!isFormedAndFullyLoaded() || !hasEnoughWaterAndLava()) {
             return new WailaDisplay(getNameTranslationKey());
         }
 
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("efficiency",
-                        hasEnoughWaterAndLava()
-                                ? Component.translatable("pylon.item.convection_hydraulic_purifier.efficiency").arguments(
-                                RebarArgument.of("bar", PylonUtils.createBar(
-                                        (getEfficiency() - basePurificationEfficiency) / (maxPurificationEfficiency - basePurificationEfficiency),
-                                        20,
-                                        TextColor.fromHexString("#ffffff")
-                                )),
-                                RebarArgument.of("efficiency", UnitFormat.PERCENT.format(100 * getEfficiency()).decimalPlaces(2))
-                                )
-                                : Component.empty()
+                RebarArgument.of("efficiency", new ProgressBar()
+                        .barColor(TextColor.fromHexString("#e0c77d"))
+                        .proportion((getEfficiency() - basePurificationEfficiency) / (maxPurificationEfficiency - basePurificationEfficiency))
+                        .suffix(Component.text(" ")
+                                .append(UnitFormat.PERCENT.format(100 * getEfficiency()).decimalPlaces(2))
+                        )
                 )
         ));
     }

@@ -18,6 +18,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RebarUtils;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -108,12 +109,11 @@ public class Press extends RebarBlock implements
     @Override
     public @NotNull WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.PLANT_OIL),
+                RebarArgument.of("fluid", ProgressBar.fluidContents(
+                        PylonFluids.PLANT_OIL,
                         fluidCapacity(PylonFluids.PLANT_OIL),
-                        20,
-                        TextColor.fromHexString("#c4b352")
-                ))
+                        fluidAmount(PylonFluids.PLANT_OIL))
+                )
         ));
     }
 

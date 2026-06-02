@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.PotionContents;
@@ -27,7 +28,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import lombok.Getter;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.*;
 import org.bukkit.Vibration.Destination.BlockDestination;
 import org.bukkit.block.Block;
@@ -490,23 +490,12 @@ public class PotionAltar extends RebarBlock
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        if (altarProgress == null) {
+            return new WailaDisplay(getNameTranslationKey());
+        }
+        double progress = (double) (altarProgress.timeTicks - altarProgress.ticksRemaining) / altarProgress.timeTicks;
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-            RebarArgument.of(
-                    "processing",
-                    altarProgress == null
-                    ? Component.translatable("pylon.waila.potion_altar.idle")
-                    : Component.translatable("pylon.waila.potion_altar.processing")
-                    .arguments(
-                        RebarArgument.of(
-                            "bars", PylonUtils.createProgressBar(
-                                        altarProgress.timeTicks - altarProgress.ticksRemaining,
-                                        altarProgress.timeTicks,
-                                        20,
-                                        TextColor.color(100, 255, 100)
-                            )
-                        )
-                    )
-            )
+                RebarArgument.of("progress", ProgressBar.recipeProgress(progress))
         ));
     }
 

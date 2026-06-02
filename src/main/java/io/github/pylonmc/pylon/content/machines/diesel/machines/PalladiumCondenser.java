@@ -8,7 +8,6 @@ import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemInputHatch;
 import io.github.pylonmc.pylon.content.components.ItemOutputHatch;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarProcessor;
@@ -19,10 +18,9 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -252,20 +250,12 @@ public class PalladiumCondenser extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        String wailaFormat = "pylon.item." + getKey().getKey() + ".waila_format";
         Integer timeLeft = getProcessTicksRemaining();
+        if (timeLeft == null) {
+            return new WailaDisplay(getNameTranslationKey());
+        }
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("duration-if-any",
-                        timeLeft == null
-                                ? Component.empty()
-                                : Component.translatable(wailaFormat).arguments(
-                                RebarArgument.of("duration", PylonUtils.createProgressBar(
-                                        ((double) getProcessTimeTicks() - (double) getProcessTicksRemaining()) / (double) getProcessTimeTicks(),
-                                        20,
-                                        NamedTextColor.WHITE
-                                ))
-                        )
-                )
+                RebarArgument.of("progress", ProgressBar.recipeProgress(getProcessProgress()))
         ));
     }
 }

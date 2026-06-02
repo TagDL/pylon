@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
@@ -181,12 +182,11 @@ public class DieselQuarry extends Quarry implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.BIODIESEL),
+                RebarArgument.of("diesel", ProgressBar.fluidContents(
+                        PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        20,
-                        TextColor.fromHexString("#eaa627")
-                ))
+                        fluidAmount(PylonFluids.BIODIESEL))
+                )
         ));
     }
 
