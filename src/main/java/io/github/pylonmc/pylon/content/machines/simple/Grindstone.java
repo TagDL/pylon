@@ -19,7 +19,6 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.PreRebarBlockPlaceEvent;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
-import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
@@ -235,29 +234,23 @@ public class Grindstone extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        WailaDisplay display = WailaDisplay.of(this);
+        
         ItemStack stack = getItemDisplay().getItemStack();
-        Component contents = stack.isEmpty()
-                ? Component.empty()
-                : Component.translatable("pylon.waila.grindstone.not-empty")
-                .arguments(
-                        RebarArgument.of("item", stack.effectiveName()),
-                        RebarArgument.of("amount", stack.getAmount())
-                );
-        Component processing;
-        if (isProcessingRecipe()) {
-            processing = Component.translatable("pylon.waila.grindstone.processing").arguments(
-                    RebarArgument.of("progress", ProgressBar.recipeProgress(getRecipeProgress()))
+        if (!stack.isEmpty()) {
+            display.add( stack.effectiveName()
+                    .append(Component.text(" x"))
+                    .append(Component.text(stack.getAmount()))
             );
-        } else if (!stack.isEmpty() && getNextRecipe() == null) {
-            processing = Component.translatable("pylon.waila.grindstone.invalid_recipe");
-        } else {
-            processing = Component.empty();
         }
-
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("contents", contents),
-                RebarArgument.of("processing", processing)
-        ));
+        
+        if (isProcessingRecipe()) {
+            display.add(ProgressBar.recipeProgress(getRecipeProgress()));
+        } else if (!stack.isEmpty() && getNextRecipe() == null) {
+            display.add(Component.translatable("pylon.message.invalid_recipe"));
+        }
+        
+        return display;
     }
 
     public @NotNull ItemDisplay getItemDisplay() {

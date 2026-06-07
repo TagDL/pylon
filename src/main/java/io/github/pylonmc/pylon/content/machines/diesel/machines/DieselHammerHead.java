@@ -279,17 +279,16 @@ public class DieselHammerHead extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("diesel", ProgressBar.fluidContents(
+        return WailaDisplay.of(this)
+                .add(ProgressBar.fluidContents(
                         PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        fluidAmount(PylonFluids.BIODIESEL))
-                ),
-                RebarArgument.of("progress", isProcessing()
+                        fluidAmount(PylonFluids.BIODIESEL)
+                ))
+                .add(isProcessing()
                         ? ProgressBar.timeRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining())
-                        : Component.translatable("pylon.waila.idle")
-                )
-        ));
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 
     @Override

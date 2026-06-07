@@ -167,14 +167,13 @@ public abstract class CoreDrill extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (!isProcessing()) {
-            return new WailaDisplay(getNameTranslationKey());
+        WailaDisplay display = WailaDisplay.of(this);
+        if (isProcessing()) {
+            display.add(ProgressBar.timeRemaining(
+                    getProcessTimeSeconds(),
+                    getProcessSecondsRemaining()
+            ));
         }
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("remaining-time", ProgressBar.timeRemaining(
-                        getProcessTimeSeconds(),
-                        getProcessSecondsRemaining()
-                ))
-        ));
+        return display;
     }
 }

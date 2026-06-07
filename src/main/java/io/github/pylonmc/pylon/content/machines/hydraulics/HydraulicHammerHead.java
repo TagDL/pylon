@@ -220,22 +220,21 @@ public class HydraulicHammerHead extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("input-fluid", ProgressBar.fluidContents(
+        return WailaDisplay.of(this)
+                .add(ProgressBar.fluidContents(
                         PylonFluids.HYDRAULIC_FLUID,
                         fluidCapacity(PylonFluids.HYDRAULIC_FLUID),
                         fluidAmount(PylonFluids.HYDRAULIC_FLUID)
-                )),
-                RebarArgument.of("output-fluid", ProgressBar.fluidContents(
+                ))
+                .add(ProgressBar.fluidContents(
                         PylonFluids.DIRTY_HYDRAULIC_FLUID,
                         fluidCapacity(PylonFluids.DIRTY_HYDRAULIC_FLUID),
                         fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID)
-                )),
-                RebarArgument.of("progress", isProcessing()
+                ))
+                .add(isProcessing()
                         ? ProgressBar.timeRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining())
-                        : Component.translatable("pylon.waila.idle")
-                )
-        ));
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 
     @Override
