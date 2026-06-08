@@ -22,7 +22,6 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -162,7 +161,7 @@ public class DieselMixingAttachment extends RebarBlock implements
         Bukkit.getScheduler().runTaskLater(
                 Pylon.getInstance(),
                 () -> {
-                    if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                    if (!isChunkLoaded()) {
                         return;
                     }
 

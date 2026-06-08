@@ -208,7 +208,7 @@ public class Press extends RebarBlock implements
         Bukkit.getScheduler().runTaskLater(
                 Pylon.getInstance(),
                 () -> {
-                    if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                    if (!isChunkLoaded()) {
                         return;
                     }
 

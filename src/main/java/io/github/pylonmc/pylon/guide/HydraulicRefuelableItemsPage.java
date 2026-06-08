@@ -35,7 +35,7 @@ public class HydraulicRefuelableItemsPage extends SimpleDynamicGuidePage {
     private static @NonNull List<Item> getButtons() {
         return RebarRegistry.ITEMS.stream()
                 .filter(item -> RebarItem.fromStack(item.getItemStack()) instanceof HydraulicRefuelable)
-                .map(item -> (Item) new ItemButton(item.getItemStack()))
+                .map(item -> ItemButton.of(item.getItemStack()))
                 .toList();
     }
 }

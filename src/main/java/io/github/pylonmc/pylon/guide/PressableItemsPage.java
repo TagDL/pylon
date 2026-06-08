@@ -46,7 +46,7 @@ public class PressableItemsPage extends SimpleDynamicGuidePage {
                             RebarArgument.of("plant-oil", UnitFormat.MILLIBUCKETS.format(recipe.oilAmount()))
                     ))
                     .build();
-            buttons.add(new ItemButton(stack));
+            buttons.add(ItemButton.of(stack));
         }
         return buttons;
     }

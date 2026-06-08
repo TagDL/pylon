@@ -204,7 +204,7 @@ public class Grindstone extends RebarBlock implements
                 double translation = isLast ? 0.8 : 0.5;
                 double rotation = (j / 4.0) * 2.0 * Math.PI;
                 Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-                    if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                    if (!isChunkLoaded()) {
                         return;
                     }
 

@@ -192,7 +192,7 @@ public class DieselBreaker extends RebarBlock implements
                     .count(5)
                     .extra(0.05)
                     .location(getBlock().getLocation().toCenterLocation().add(0, 0.6, 0))
-                    .data(new ItemStack(drilling.getType()))
+                    .data(ItemStack.of(drilling.getType()))
                     .spawn();
         }
     }

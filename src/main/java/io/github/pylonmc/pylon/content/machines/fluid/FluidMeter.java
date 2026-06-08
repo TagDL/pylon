@@ -156,7 +156,7 @@ public class FluidMeter extends RebarBlock implements
                         .translate(new Vector3d(0.0, 0.3, 0.0))
                         .scale(0.07, 0.07, 0.07)
                 )
-                .itemStack(new ItemStack(Material.BARRIER))
+                .itemStack(ItemStack.of(Material.BARRIER))
                 .billboard(Display.Billboard.VERTICAL)
                 .build(block.getLocation().toCenterLocation())
         );

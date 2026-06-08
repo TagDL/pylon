@@ -98,7 +98,7 @@ public class CreativeFluidSource extends RebarBlock implements
     public @NotNull Gui createGui() {
         return (FluidSelector.make(() -> fluid, fluid -> {
             this.fluid = fluid;
-            ItemStack stack = fluid == null ? new ItemStack(Material.RED_TERRACOTTA) : fluid.getItem();
+            ItemStack stack = fluid == null ? ItemStack.of(Material.RED_TERRACOTTA) : fluid.getItem();
             getHeldEntityOrThrow(ItemDisplay.class, "fluid-1").setItemStack(stack);
             getHeldEntityOrThrow(ItemDisplay.class, "fluid-2").setItemStack(stack);
             getHeldEntityOrThrow(ItemDisplay.class, "fluid-3").setItemStack(stack);

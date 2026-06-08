@@ -19,11 +19,10 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -123,7 +122,7 @@ public class HydraulicMixingAttachment extends RebarBlock implements
         Bukkit.getScheduler().runTaskLater(
                 Pylon.getInstance(),
                 () -> {
-                    if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                    if (!isChunkLoaded()) {
                         return;
                     }
                     PylonUtils.animate(getMixingAttachmentShaft(), upAnimationTimeTicks, getShaftTransformation(0.7));
