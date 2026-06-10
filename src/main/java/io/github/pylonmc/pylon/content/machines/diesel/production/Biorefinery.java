@@ -233,12 +233,11 @@ public class Biorefinery extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("fuel", isProcessing()
+        return WailaDisplay.of(this, player)
+                .add(isProcessing()
                         ? ProgressBar.fuelRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining())
-                        : Component.translatable("pylon.message.biorefinery.no_fuel")
-                )
-        ));
+                        : Component.translatable("pylon.message.no_fuel")
+                );
     }
 
     public record Fuel(
@@ -259,17 +258,17 @@ public class Biorefinery extends RebarBlock implements
         RebarRegistry.addRegistry(FUELS);
         FUELS.register(new Fuel(
                 pylonKey("coal"),
-                new ItemStack(Material.COAL),
+                ItemStack.of(Material.COAL),
                 15
         ));
         FUELS.register(new Fuel(
                 pylonKey("coal_block"),
-                new ItemStack(Material.COAL_BLOCK),
+                ItemStack.of(Material.COAL_BLOCK),
                 135
         ));
         FUELS.register(new Fuel(
                 pylonKey("charcoal"),
-                new ItemStack(Material.CHARCOAL),
+                ItemStack.of(Material.CHARCOAL),
                 10
         ));
         FUELS.register(new Fuel(
