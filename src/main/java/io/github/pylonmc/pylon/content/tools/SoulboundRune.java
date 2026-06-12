@@ -1,7 +1,13 @@
 package io.github.pylonmc.pylon.content.tools;
 
 import io.github.pylonmc.pylon.content.tools.base.Rune;
+import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.context.BlockBreakContext.PlayerBreak;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
+import io.github.pylonmc.rebar.event.RebarBlockBreakEvent;
+import io.github.pylonmc.rebar.event.RebarBlockDeserializeEvent;
+import io.github.pylonmc.rebar.event.RebarBlockPlaceEvent;
+import io.github.pylonmc.rebar.event.RebarBlockSerializeEvent;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import net.kyori.adventure.text.Component;
@@ -10,14 +16,19 @@ import net.kyori.adventure.translation.GlobalTranslator;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -77,6 +88,51 @@ public class SoulboundRune extends Rune {
                     curItem.remove();
                 }
             }
+        }
+
+        private List<RebarBlock> soulbound_blocks = new ArrayList<>();
+        
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        public void onBlockPlace(RebarBlockPlaceEvent event) {
+            ItemStack itemStack = event.getContext().getItem().asOne();
+            RebarBlock block = event.getRebarBlock();
+
+            if (itemStack.getPersistentDataContainer().has(SOULBOUND_KEY)) {
+                soulbound_blocks.add(block);
+            }
+        }
+
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        public void onBlockBreak(@NotNull RebarBlockBreakEvent event) {
+            RebarBlock block = event.getRebarBlock();
+            if (!(event.getContext() instanceof PlayerBreak playerBreak)) return;
+            Player player = playerBreak.event().getPlayer();
+            if (soulbound_blocks.contains(block)) {
+                soulbound_blocks.remove(block);
+                for (ItemStack itemStack : event.getDrops()) {
+                    List<Component> lore = new ArrayList<>(itemStack.lore());
+                    
+                    lore.add(GlobalTranslator.render(Component.translatable("pylon.message.soulbound_rune.tooltip"), player.locale()));
+                    itemStack.editPersistentDataContainer(pdc -> 
+                        pdc.set(pylonKey("soulbound"), RebarSerializers.UUID, player.getUniqueId()));
+                    
+                    itemStack.lore(lore);
+                }
+            }
+        }
+
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        public void onSerialize(@NotNull RebarBlockSerializeEvent event) {
+            RebarBlock block = event.getRebarBlock();
+            PersistentDataContainer pdc = event.getPdc();
+            if (soulbound_blocks.contains(block)) pdc.set(SOULBOUND_KEY, RebarSerializers.BOOLEAN, true);
+        }
+
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        public void onDeserialize(@NotNull RebarBlockDeserializeEvent event) {
+            RebarBlock block = event.getRebarBlock();
+            PersistentDataContainer pdc = event.getPdc();
+            if (pdc.has(SOULBOUND_KEY) && !soulbound_blocks.contains(block)) soulbound_blocks.add(block);
         }
     }
 }
