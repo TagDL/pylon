@@ -59,14 +59,14 @@ public class FireproofRune extends Rune {
     }
 
     /**
-     * Checks if the target is already fireproof.
+     * Checks if the target is already give fireproof by fireproof_rune.
      *
      * @param target The item to handle, amount may be > 1
      * @return true if is fireproof, false otherwise
      */
     public static boolean isFireproof(@NotNull ItemStack target) {
         return target.getPersistentDataContainer()
-            .getOrDefault(FIREPROOF_KEY, RebarSerializers.BOOLEAN, false);
+                .getOrDefault(FIREPROOF_KEY, RebarSerializers.BOOLEAN, false);
     }
     /**
      * Fixes #156 - Fireproof rune can be applied multiple times
@@ -80,10 +80,10 @@ public class FireproofRune extends Rune {
      */
     @Override
     public boolean isApplicableToTarget(@NotNull PlayerDropItemEvent event, @NotNull ItemStack rune, @NotNull ItemStack target) {
-        // DamageResistant data = target.getData(DataComponentTypes.DAMAGE_RESISTANT);
-        // if (data == null) return true;
-        // return !data.types().equals(IS_FIRE_TAG);
-        return !isFireproof(target);
+        if (isFireproof(target)) return false;
+        DamageResistant data = target.getData(DataComponentTypes.DAMAGE_RESISTANT);
+        if (data == null) return true;
+        return !data.types().equals(IS_FIRE_TAG);
     }
 
     /**
