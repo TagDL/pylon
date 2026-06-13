@@ -3,13 +3,14 @@ package io.github.pylonmc.pylon.content.tools;
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.content.tools.base.Rune;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.context.BlockBreakContext.PlayerBreak;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.event.RebarBlockBreakEvent;
 import io.github.pylonmc.rebar.event.RebarBlockDeserializeEvent;
 import io.github.pylonmc.rebar.event.RebarBlockPlaceEvent;
 import io.github.pylonmc.rebar.event.RebarBlockSerializeEvent;
+import io.github.pylonmc.rebar.event.RebarBlockUnloadEvent;
+import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.papermc.paper.datacomponent.DataComponentTypes;
@@ -19,7 +20,7 @@ import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.keys.tags.DamageTypeTagKeys;
 import io.papermc.paper.registry.tag.Tag;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.translation.GlobalTranslator;
+import net.kyori.adventure.text.format.TextDecoration;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -102,7 +103,7 @@ public class FireproofRune extends Rune {
         ItemStack handle = ItemStackBuilder.of(target.asQuantity(consume)) // Already cloned in `asQuantity`
                 .set(DataComponentTypes.DAMAGE_RESISTANT, DamageResistant.damageResistant(IS_FIRE_TAG))
                 .editPdc(pdc -> pdc.set(FIREPROOF_KEY, RebarSerializers.BOOLEAN, true))
-                .lore(GlobalTranslator.render(TOOLTIP, player.locale()))
+                .lore(TOOLTIP.decoration(TextDecoration.ITALIC, true))
                 .build();
 
         // (N)Either left runes or targets
@@ -139,31 +140,39 @@ public class FireproofRune extends Rune {
     }
 
     public static class FireproofRuneListener implements Listener {
-        private List<RebarBlock> fireproof_blocks = new ArrayList<>();
+        private final List<RebarBlock> fireproofBlocks = new ArrayList<>();
 
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onBlockPlace(RebarBlockPlaceEvent event) {
-            ItemStack itemStack = event.getContext().getItem().asOne();
+            ItemStack itemStack = event.getContext().getItem();
+            if (itemStack == null || itemStack.isEmpty()) return; //for safety
             RebarBlock block = event.getRebarBlock();
             if (itemStack.getPersistentDataContainer().has(FIREPROOF_KEY)) {
-                fireproof_blocks.add(block);
+                fireproofBlocks.add(block);
             }
         }
 
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onBlockBreak(@NotNull RebarBlockBreakEvent event) {
             RebarBlock block = event.getRebarBlock();
-            if (!(event.getContext() instanceof PlayerBreak playerBreak)) return;
-            Player player = playerBreak.event().getPlayer();
-            for (ItemStack itemStack : event.getDrops()) {
-                List<Component> lore = new ArrayList<>(itemStack.lore());
-                if (fireproof_blocks.contains(block)) {
-                    fireproof_blocks.remove(block);
-                    lore.add(GlobalTranslator.render(Component.translatable("pylon.message.fireproof_result.tooltip"), player.locale()));
+            if (fireproofBlocks.contains(block)) {
+                fireproofBlocks.remove(block);
+                for (ItemStack itemStack : event.getDrops()) {
+                    RebarItemSchema dropSchema = RebarItemSchema.fromStack(itemStack);  
+                    if (dropSchema == null) continue; //use schema to make sure as same as itself
+
+                    NamespacedKey blockItemKey = block.getSchema().getKey();
+                    if (blockItemKey == null || !dropSchema.getKey().equals(blockItemKey)) continue;
+
+                    List<Component> lore = new ArrayList<>(itemStack.lore());
+                    lore.add(Component.translatable("pylon.message.fireproof_result.tooltip")
+                        .decoration(TextDecoration.ITALIC, true)); //make sure lore is italic
+                    itemStack.lore(lore);
+
                     itemStack.setData(DataComponentTypes.DAMAGE_RESISTANT, DamageResistant.damageResistant(FireproofRune.IS_FIRE_TAG));
                     itemStack.editPersistentDataContainer(pdc -> pdc.set(FIREPROOF_KEY, RebarSerializers.BOOLEAN, true));
+                    break;
                 }
-                itemStack.lore(lore);
             }
         }
 
@@ -171,7 +180,7 @@ public class FireproofRune extends Rune {
         public void onSerialize(@NotNull RebarBlockSerializeEvent event) {
             RebarBlock block = event.getRebarBlock();
             PersistentDataContainer pdc = event.getPdc();
-            if (fireproof_blocks.contains(block)) {
+            if (fireproofBlocks.contains(block)) {
                 pdc.set(FIREPROOF_KEY, RebarSerializers.BOOLEAN, true);
             }
         }
@@ -180,7 +189,12 @@ public class FireproofRune extends Rune {
         public void onDeserialize(@NotNull RebarBlockDeserializeEvent event) {
             RebarBlock block = event.getRebarBlock();
             PersistentDataContainer pdc = event.getPdc();
-            if (pdc.has(FIREPROOF_KEY) && !fireproof_blocks.contains(block)) fireproof_blocks.add(block);
+            if (pdc.has(FIREPROOF_KEY) && !fireproofBlocks.contains(block)) fireproofBlocks.add(block);
+        }
+
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        public void onBlockUnload(@NotNull RebarBlockUnloadEvent event) { //add unload event
+            fireproofBlocks.remove(event.getRebarBlock());
         }
     }
 }
