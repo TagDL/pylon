@@ -9,7 +9,6 @@ import io.github.pylonmc.rebar.item.interfaces.BlockBreakRebarItemHandler;
 import io.github.pylonmc.rebar.item.interfaces.BowRebarItemHandler;
 import io.github.pylonmc.rebar.item.interfaces.BucketRebarItemHandler;
 import io.github.pylonmc.rebar.item.interfaces.EntityAttackRebarItemHandler;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -73,7 +72,6 @@ public abstract class Rune extends RebarItem {
     public abstract void onContactItem(@NotNull PlayerDropItemEvent event, @NotNull ItemStack rune, @NotNull ItemStack target);
 
     public static class RuneListener implements Listener {
-
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         void onRuneDrop(@NotNull PlayerDropItemEvent event) {
             Player player = event.getPlayer();

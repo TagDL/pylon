@@ -20,13 +20,6 @@ import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.keys.tags.DamageTypeTagKeys;
 import io.papermc.paper.registry.tag.Tag;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
-
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -38,8 +31,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 /**
  * @author balugaq
@@ -60,16 +57,6 @@ public class FireproofRune extends Rune {
     }
 
     /**
-     * Checks if the target is already give fireproof by fireproof_rune.
-     *
-     * @param target The item to handle, amount may be > 1
-     * @return true if is fireproof, false otherwise
-     */
-    public static boolean isFireproof(@NotNull ItemStack target) {
-        return target.getPersistentDataContainer()
-                .getOrDefault(FIREPROOF_KEY, RebarSerializers.BOOLEAN, false);
-    }
-    /**
      * Fixes #156 - Fireproof rune can be applied multiple times
      * <p>
      * Checks if the rune is applicable to the target item.
@@ -81,7 +68,7 @@ public class FireproofRune extends Rune {
      */
     @Override
     public boolean isApplicableToTarget(@NotNull PlayerDropItemEvent event, @NotNull ItemStack rune, @NotNull ItemStack target) {
-        if (isFireproof(target)) return false;
+        if (hasRuneApplied(target)) return false;
         DamageResistant data = target.getData(DataComponentTypes.DAMAGE_RESISTANT);
         if (data == null) return true;
         return !data.types().equals(IS_FIRE_TAG);
@@ -100,11 +87,7 @@ public class FireproofRune extends Rune {
         int consume = Math.min(rune.getAmount(), target.getAmount());
 
         Player player = event.getPlayer();
-        ItemStack handle = ItemStackBuilder.of(target.asQuantity(consume)) // Already cloned in `asQuantity`
-                .set(DataComponentTypes.DAMAGE_RESISTANT, DamageResistant.damageResistant(IS_FIRE_TAG))
-                .editPdc(pdc -> pdc.set(FIREPROOF_KEY, RebarSerializers.BOOLEAN, true))
-                .lore(TOOLTIP.decoration(TextDecoration.ITALIC, true))
-                .build();
+        ItemStack handle = applyRune(target, consume);
 
         // (N)Either left runes or targets
         int leftRunes = rune.getAmount() - consume;
@@ -139,61 +122,75 @@ public class FireproofRune extends Rune {
                 .spawn();
     }
 
+    public static ItemStack applyRune(@NotNull ItemStack itemStack, int amount) {
+        return ItemStackBuilder.of(itemStack.asQuantity(amount))
+                .set(DataComponentTypes.DAMAGE_RESISTANT, DamageResistant.damageResistant(IS_FIRE_TAG))
+                .editPdc(pdc -> pdc.set(FIREPROOF_KEY, RebarSerializers.BOOLEAN, true))
+                .lore(TOOLTIP)
+                .build();
+    }
+
+    /**
+     * Checks if the target already has the fireproof rune applied
+     *
+     * @return true if the fireproof rune has been used on the item, false otherwise
+     */
+    public static boolean hasRuneApplied(@NotNull ItemStack itemStack) {
+        return itemStack.getPersistentDataContainer().getOrDefault(FIREPROOF_KEY, RebarSerializers.BOOLEAN, false);
+    }
+
     public static class FireproofRuneListener implements Listener {
         private final List<RebarBlock> fireproofBlocks = new ArrayList<>();
 
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onBlockPlace(RebarBlockPlaceEvent event) {
             ItemStack itemStack = event.getContext().getItem();
-            if (itemStack == null || itemStack.isEmpty()) return; //for safety
-            RebarBlock block = event.getRebarBlock();
+            if (itemStack == null || itemStack.isEmpty()) {
+                return;
+            }
+
             if (itemStack.getPersistentDataContainer().has(FIREPROOF_KEY)) {
-                fireproofBlocks.add(block);
-            }
-        }
-
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onBlockBreak(@NotNull RebarBlockBreakEvent event) {
-            RebarBlock block = event.getRebarBlock();
-            if (fireproofBlocks.contains(block)) {
-                fireproofBlocks.remove(block);
-                for (ItemStack itemStack : event.getDrops()) {
-                    RebarItemSchema dropSchema = RebarItemSchema.fromStack(itemStack);  
-                    if (dropSchema == null) continue; //use schema to make sure as same as itself
-
-                    NamespacedKey blockItemKey = block.getSchema().getKey();
-                    if (blockItemKey == null || !dropSchema.getKey().equals(blockItemKey)) continue;
-
-                    List<Component> lore = new ArrayList<>(itemStack.lore());
-                    lore.add(Component.translatable("pylon.message.fireproof_result.tooltip")
-                        .decoration(TextDecoration.ITALIC, true)); //make sure lore is italic
-                    itemStack.lore(lore);
-
-                    itemStack.setData(DataComponentTypes.DAMAGE_RESISTANT, DamageResistant.damageResistant(FireproofRune.IS_FIRE_TAG));
-                    itemStack.editPersistentDataContainer(pdc -> pdc.set(FIREPROOF_KEY, RebarSerializers.BOOLEAN, true));
-                    break;
-                }
-            }
-        }
-
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onSerialize(@NotNull RebarBlockSerializeEvent event) {
-            RebarBlock block = event.getRebarBlock();
-            PersistentDataContainer pdc = event.getPdc();
-            if (fireproofBlocks.contains(block)) {
-                pdc.set(FIREPROOF_KEY, RebarSerializers.BOOLEAN, true);
+                fireproofBlocks.add(event.getRebarBlock());
             }
         }
 
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onDeserialize(@NotNull RebarBlockDeserializeEvent event) {
             RebarBlock block = event.getRebarBlock();
-            PersistentDataContainer pdc = event.getPdc();
-            if (pdc.has(FIREPROOF_KEY) && !fireproofBlocks.contains(block)) fireproofBlocks.add(block);
+            if (event.getPdc().has(FIREPROOF_KEY) && !fireproofBlocks.contains(block)) {
+                fireproofBlocks.add(block);
+            }
         }
 
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onBlockUnload(@NotNull RebarBlockUnloadEvent event) { //add unload event
+        public void onSerialize(@NotNull RebarBlockSerializeEvent event) {
+            if (fireproofBlocks.contains(event.getRebarBlock())) {
+                event.getPdc().set(FIREPROOF_KEY, RebarSerializers.BOOLEAN, true);
+            }
+        }
+
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        public void onBlockBreak(@NotNull RebarBlockBreakEvent event) {
+            RebarBlock block = event.getRebarBlock();
+            if (!fireproofBlocks.remove(block)) {
+                return;
+            }
+
+            for (ItemStack itemStack : event.getDrops()) {
+                RebarItemSchema dropSchema = RebarItemSchema.fromStack(itemStack);
+                if (dropSchema == null || !block.getKey().equals(dropSchema.getRebarBlockKey())) {
+                    continue;
+                }
+
+                ItemStack fireproofStack = applyRune(itemStack, 1);
+                itemStack.subtract();
+                event.getDrops().add(fireproofStack);
+                break;
+            }
+        }
+
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        public void onBlockUnload(@NotNull RebarBlockUnloadEvent event) {
             fireproofBlocks.remove(event.getRebarBlock());
         }
     }
