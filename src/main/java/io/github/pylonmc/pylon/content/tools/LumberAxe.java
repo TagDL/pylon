@@ -35,7 +35,7 @@ public class LumberAxe extends RebarItem implements BlockBreakRebarItemHandler {
 
     private static final Set<Event> eventsToIgnore = Collections.newSetFromMap(new WeakHashMap<>());
 
-    @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
+    @Override @MultiHandler(priorities = EventPriority.NORMAL, ignoreCancelled = true)
     public void onBreakBlock(@NotNull BlockBreakEvent event, @NotNull EventPriority priority) {
         if (!Tag.LOGS.isTagged(event.getBlock().getType()) || BlockStorage.isRebarBlock(event.getBlock())) {
             return;
